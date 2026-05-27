@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -65,7 +66,7 @@ export class Register {
 
     this.cargando = true;
 
-    this.http.post<any>('http://localhost:3000/auth/register', {
+    this.http.post<any>(`${environment.apiUrl}/auth/login`, {
       nombre: this.nombre,
       apellido: this.apellido,
       email: this.email,

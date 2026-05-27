@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,7 @@ export class Login {
 
     this.cargando = true;
 
-    this.http.post<any>('http://localhost:3000/auth/login', {
+    this.http.post<any>(`${environment.apiUrl}/auth/login`, {
       identificador: this.identificador,
       password: this.password
     }).subscribe({
