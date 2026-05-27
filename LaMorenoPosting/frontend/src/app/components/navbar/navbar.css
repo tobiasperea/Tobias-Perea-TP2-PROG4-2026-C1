@@ -1,0 +1,47 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 32px;
+  background: var(--fondo-card);
+  border-bottom: 0.5px solid var(--azul-mid);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--azul);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-right a {
+  font-size: 14px;
+  color: var(--texto);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navbar-right a:hover {
+  color: var(--azul);
+}
+
+.username {
+  color: var(--azul-apagado);
+  font-size: 13px;
+}
+
+.logout-btn {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+}

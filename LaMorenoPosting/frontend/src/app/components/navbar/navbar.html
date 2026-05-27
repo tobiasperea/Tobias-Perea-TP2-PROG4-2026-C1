@@ -1,1 +1,12 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="navbar-left">
+    <a routerLink="/publicaciones" class="logo">LaMorenoPosting</a>
+  </div>
+
+  <div class="navbar-right" *ngIf="usuario">
+    <a routerLink="/publicaciones">Publicaciones</a>
+    <a routerLink="/perfil">Mi Perfil</a>
+    <span class="username">@{{ usuario.username }}</span>
+    <button class="outline logout-btn" (click)="logout()">Salir</button>
+  </div>
+</nav>

@@ -1,1 +1,40 @@
-<p>register works!</p>
+<div class="center-page">
+  <div class="register-container">
+
+    <h1>Crear cuenta</h1>
+    <p class="subtitulo">Unite a LaMorenoPosting</p>
+
+    <div class="fila">
+      <input [(ngModel)]="nombre" placeholder="Nombre">
+      <input [(ngModel)]="apellido" placeholder="Apellido">
+    </div>
+
+    <input [(ngModel)]="email" type="email" placeholder="Correo">
+    <input [(ngModel)]="username" placeholder="Nombre de usuario">
+    <input [(ngModel)]="password" type="password" placeholder="Contraseña">
+    <input [(ngModel)]="repetirPassword" type="password" placeholder="Repetir contraseña">
+
+    <div class="campo">
+      <label>Fecha de nacimiento</label>
+      <input [(ngModel)]="fechaNacimiento" type="date">
+    </div>
+
+    <textarea [(ngModel)]="descripcion" placeholder="Descripción breve (opcional)" rows="3"></textarea>
+
+    <div class="campo">
+      <label>Foto de perfil (opcional)</label>
+      <input type="file" accept="image/*" (change)="onImagenSeleccionada($event)">
+    </div>
+
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+    <button (click)="registrar()" [disabled]="cargando">
+      {{ cargando ? 'Registrando...' : 'Registrarse' }}
+    </button>
+
+    <button class="outline" routerLink="/login">
+      ¿Ya tenés cuenta? Iniciá sesión
+    </button>
+
+  </div>
+</div>

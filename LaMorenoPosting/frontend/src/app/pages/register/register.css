@@ -1,0 +1,41 @@
+.center-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  gap: 12px;
+  padding: 32px 28px;
+  background: var(--fondo-card);
+  border-radius: var(--border-radius);
+  border: 0.5px solid var(--azul-mid);
+}
+
+.subtitulo {
+  font-size: 13px;
+  color: var(--azul-apagado);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.fila {
+  display: flex;
+  gap: 10px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 13px;
+  color: var(--azul-apagado);
+}

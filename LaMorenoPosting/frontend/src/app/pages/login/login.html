@@ -1,1 +1,23 @@
-<p>login works!</p>
+<div class="center-page">
+  <div class="login-container">
+
+    <div class="logo">
+      <h1>LaMorenoPosting</h1>
+      <p class="subtitulo">La plaza virtual de Sarandí</p>
+    </div>
+
+    <input [(ngModel)]="identificador" placeholder="Usuario o correo">
+    <input [(ngModel)]="password" type="password" placeholder="Contraseña">
+
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+    <button (click)="login()" [disabled]="cargando">
+      {{ cargando ? 'Entrando...' : 'Entrar' }}
+    </button>
+
+    <button class="outline" routerLink="/register">
+      ¿No tenés cuenta? Registrate
+    </button>
+
+  </div>
+</div>
