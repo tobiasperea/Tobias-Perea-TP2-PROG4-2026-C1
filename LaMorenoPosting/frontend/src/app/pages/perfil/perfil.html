@@ -1,8 +1,7 @@
 <div class="perfil-wrapper">
   <h1>Mi Perfil</h1>
-  <div *ngIf="usuario">
-    <p>{{ usuario.nombre }} {{ usuario.apellido }}</p>
-    <p>@{{ usuario.username }}</p>
-    <p>{{ usuario.email }}</p>
+  <div *ngIf="auth.usuario()">
+    <p>{{ auth.usuario()?.nombre }} {{ auth.usuario()?.apellido }}</p>
+    <p>@{{ auth.usuario()?.username }}</p>
   </div>
 </div>

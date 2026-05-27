@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class Login {
   errorMsg = '';
   cargando = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, public auth: AuthService) {}
 
   login() {
     this.errorMsg = '';
@@ -41,8 +42,7 @@ export class Login {
       password: this.password
     }).subscribe({
       next: (res) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('usuario', JSON.stringify(res.usuario));
+        this.auth.setUsuario(res.usuario, res.token);
         this.router.navigate(['/publicaciones']);
       },
       error: (err) => {

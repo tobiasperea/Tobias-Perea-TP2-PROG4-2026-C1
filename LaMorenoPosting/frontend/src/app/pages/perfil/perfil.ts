@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Navbar } from '../../components/navbar/navbar';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-perfil',
@@ -12,6 +13,8 @@ import { Navbar } from '../../components/navbar/navbar';
 export class Perfil implements OnInit {
 
   usuario: any = null;
+
+  constructor(public auth: AuthService) {}
 
   ngOnInit() {
     const data = localStorage.getItem('usuario');

@@ -3,10 +3,15 @@
     <a routerLink="/publicaciones" class="logo">LaMorenoPosting</a>
   </div>
 
-  <div class="navbar-right" *ngIf="usuario">
+  <div class="navbar-right" *ngIf="auth.usuario()">
     <a routerLink="/publicaciones">Publicaciones</a>
     <a routerLink="/perfil">Mi Perfil</a>
-    <span class="username">@{{ usuario.username }}</span>
+    <span class="username">@{{ auth.usuario()?.username }}</span>
     <button class="outline logout-btn" (click)="logout()">Salir</button>
+  </div>
+
+  <div class="navbar-right" *ngIf="!auth.usuario()">
+    <a routerLink="/login">Iniciar sesión</a>
+    <a routerLink="/register">Registrarse</a>
   </div>
 </nav>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ export class Navbar implements OnInit {
 
   usuario: any = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public auth: AuthService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     const data = localStorage.getItem('usuario');
@@ -23,8 +24,7 @@ export class Navbar implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
-    this.router.navigate(['/login']);
+    this.auth.logout();
+    this.cdr.detectChanges();
   }
 }
