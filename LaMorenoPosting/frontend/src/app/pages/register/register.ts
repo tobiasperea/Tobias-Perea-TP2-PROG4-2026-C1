@@ -66,7 +66,7 @@ export class Register {
 
     this.cargando = true;
 
-    this.http.post<any>(`${environment.apiUrl}/auth/login`, {
+    this.http.post<any>(`${environment.apiUrl}/auth/register`, {
       nombre: this.nombre,
       apellido: this.apellido,
       email: this.email,
