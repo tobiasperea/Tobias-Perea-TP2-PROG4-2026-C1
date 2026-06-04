@@ -1,4 +1,10 @@
 <div class="publicaciones-wrapper">
+
   <h1>Publicaciones</h1>
-  <p>Acá van las publicaciones...</p>
+
+  <app-publicacion
+    *ngFor="let publicacion of publicaciones"
+    [publicacion]="publicacion">
+  </app-publicacion>
+
 </div>
