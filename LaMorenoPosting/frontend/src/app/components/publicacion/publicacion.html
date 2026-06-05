@@ -8,8 +8,16 @@
         Likes: {{ publicacion.likes.length }}
     </p>
 
-    <button (click)="darLike()">
+    <button *ngIf="!tieneLike()" (click)="darLike()">
+
         ❤️ Like
+
+    </button>
+
+    <button *ngIf="tieneLike()" (click)="quitarLike()">
+
+        💔 Quitar Like
+
     </button>
 
     <button (click)="eliminar()">

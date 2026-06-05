@@ -1,10 +1,33 @@
+
 <div class="publicaciones-wrapper">
 
-  <h1>Publicaciones</h1>
+  <div class="publicaciones-header">
+    <h1>Publicaciones</h1>
+    <div class="orden-btns">
+      <button [class.active]="orden === 'fecha'" 
+              (click)="cambiarOrden('fecha')">
+        📅 Fecha
+      </button>
+      <button [class.active]="orden === 'likes'"
+              (click)="cambiarOrden('likes')">
+        ❤️ Likes
+      </button>
+    </div>
+  </div>
 
   <app-publicacion
-    *ngFor="let publicacion of publicaciones"
-    [publicacion]="publicacion">
+    *ngFor="let pub of publicaciones"
+    [publicacion]="pub"
+    (eliminada)="cargar()">
   </app-publicacion>
+
+  <div class="paginacion">
+    <button class="outline" (click)="paginaAnterior()" [disabled]="offset === 0">
+      ← Anterior
+    </button>
+    <button class="outline" (click)="paginaSiguiente()" [disabled]="!hayMas">
+      Siguiente →
+    </button>
+  </div>
 
 </div>

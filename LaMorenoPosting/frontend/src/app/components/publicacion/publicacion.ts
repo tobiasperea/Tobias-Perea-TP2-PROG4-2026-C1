@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PublicacionesService } from '../../services/publicaciones.service';
@@ -15,9 +15,15 @@ export class Publicacion {
   @Input()
   publicacion: any;
 
+  @Output()
+  eliminada = new EventEmitter<void>();
+
+  usuarioActual = '123456';
+
   constructor(
-    private publicacionesService: PublicacionesService
-  ) {}
+    private publicacionesService: PublicacionesService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   darLike() {
 
@@ -26,21 +32,40 @@ export class Publicacion {
       .subscribe(res => {
 
         console.log('LIKE OK', res);
+        this.publicacion = res;
+        this.cdr.detectChanges();
+
+      });
+
+  }
+
+  tieneLike() {
+
+    return this.publicacion.likes.includes(
+      this.usuarioActual
+    );
+
+  }
+
+  quitarLike() {
+
+    this.publicacionesService
+      .quitarLike(this.publicacion._id)
+      .subscribe((res: any) => {
+
+        this.publicacion = res;
+        this.cdr.detectChanges();
 
       });
 
   }
 
   eliminar() {
-
     this.publicacionesService
       .eliminar(this.publicacion._id)
-      .subscribe(res => {
-
-        console.log('ELIMINADO', res);
-
+      .subscribe(() => {
+        this.eliminada.emit();
       });
-
   }
 
 }
