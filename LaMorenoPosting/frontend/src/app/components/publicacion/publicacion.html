@@ -1,27 +1,30 @@
 <div class="publicacion-card">
 
-    <h3>{{ publicacion.titulo }}</h3>
+  <div class="publicacion-meta">
+    <span class="publicacion-autor">@{{ publicacion.usuarioId }}</span>
+    <span class="publicacion-likes">❤️ {{ publicacion.likes.length }}</span>
+  </div>
 
-    <p>{{ publicacion.descripcion }}</p>
+  <h3 class="publicacion-titulo">{{ publicacion.titulo }}</h3>
+  <p class="publicacion-descripcion">{{ publicacion.descripcion }}</p>
 
-    <p>
-        Likes: {{ publicacion.likes.length }}
-    </p>
+  <img *ngIf="publicacion.imagenUrl" 
+       [src]="publicacion.imagenUrl" 
+       class="publicacion-imagen"
+       alt="imagen">
 
-    <button *ngIf="!tieneLike()" (click)="darLike()">
-
-        ❤️ Like
-
+  <div class="publicacion-acciones">
+    <button class="btn-like" 
+            [class.activo]="tieneLike()"
+            (click)="tieneLike() ? quitarLike() : darLike()">
+      {{ tieneLike() ? '💔 Quitar like' : '❤️ Like' }}
     </button>
 
-    <button *ngIf="tieneLike()" (click)="quitarLike()">
-
-        💔 Quitar Like
-
+    <button class="btn-eliminar" 
+            *ngIf="publicacion.usuarioId === usuarioActual"
+            (click)="eliminar()">
+      🗑️ Eliminar
     </button>
-
-    <button (click)="eliminar()">
-        🗑️ Eliminar
-    </button>
+  </div>
 
 </div>

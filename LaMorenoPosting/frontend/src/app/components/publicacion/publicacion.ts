@@ -18,7 +18,10 @@ export class Publicacion {
   @Output()
   eliminada = new EventEmitter<void>();
 
-  usuarioActual = '123456';
+  get usuarioActual() {
+    const usuario = localStorage.getItem('usuario');
+    return usuario ? JSON.parse(usuario).id : '';
+  }
 
   constructor(
     private publicacionesService: PublicacionesService,

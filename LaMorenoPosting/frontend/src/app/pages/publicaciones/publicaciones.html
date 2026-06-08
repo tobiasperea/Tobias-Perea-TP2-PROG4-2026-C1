@@ -1,30 +1,38 @@
+<div class="nuevo-post" *ngIf="!mostrarFormulario">
+  <button (click)="mostrarFormulario = true">+ Nueva publicación</button>
+</div>
 
+<div class="form-post" *ngIf="mostrarFormulario">
+  <input [(ngModel)]="nuevoTitulo" placeholder="Título">
+  <textarea [(ngModel)]="nuevaDescripcion" placeholder="¿Qué está pasando en La Moreno?" rows="3"></textarea>
+  <input [(ngModel)]="nuevaImagenUrl" placeholder="URL de imagen (opcional)">
+  <div class="form-btns">
+    <button (click)="crearPublicacion()">Publicar</button>
+    <button class="outline" (click)="mostrarFormulario = false">Cancelar</button>
+  </div>
+</div>
 <div class="publicaciones-wrapper">
 
   <div class="publicaciones-header">
     <h1>Publicaciones</h1>
     <div class="orden-btns">
-      <button [class.active]="orden === 'fecha'" 
-              (click)="cambiarOrden('fecha')">
+      <button [class.active]="orden === 'fecha'" (click)="cambiarOrden('fecha')">
         📅 Fecha
       </button>
-      <button [class.active]="orden === 'likes'"
-              (click)="cambiarOrden('likes')">
+      <button [class.active]="orden === 'likes'" (click)="cambiarOrden('likes')">
         ❤️ Likes
       </button>
     </div>
   </div>
 
-  <app-publicacion
-    *ngFor="let pub of publicaciones"
-    [publicacion]="pub"
-    (eliminada)="cargar()">
+  <app-publicacion *ngFor="let pub of publicaciones" [publicacion]="pub" (eliminada)="cargar()">
   </app-publicacion>
 
   <div class="paginacion">
     <button class="outline" (click)="paginaAnterior()" [disabled]="offset === 0">
       ← Anterior
     </button>
+    <span class="pagina-info">Página {{ (offset / limit) + 1 }}</span>
     <button class="outline" (click)="paginaSiguiente()" [disabled]="!hayMas">
       Siguiente →
     </button>

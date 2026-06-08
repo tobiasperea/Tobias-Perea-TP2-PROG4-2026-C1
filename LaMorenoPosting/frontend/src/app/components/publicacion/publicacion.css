@@ -1,0 +1,87 @@
+.publicacion-card {
+  background: var(--fondo-card);
+  border: 0.5px solid var(--azul-mid);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.publicacion-card:hover {
+  border-color: var(--azul);
+}
+
+.publicacion-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 8px;
+}
+
+.publicacion-descripcion {
+  font-size: 14px;
+  color: var(--texto);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.publicacion-imagen {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  margin-bottom: 12px;
+}
+
+.publicacion-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.publicacion-autor {
+  font-size: 12px;
+  color: var(--azul-apagado);
+}
+
+.publicacion-likes {
+  font-size: 13px;
+  color: var(--azul-apagado);
+}
+
+.publicacion-acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-like {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  background: transparent;
+  color: var(--azul);
+  border: 0.5px solid var(--azul);
+}
+
+.btn-like:hover {
+  background: var(--azul-oscuro);
+}
+
+.btn-like.activo {
+  background: var(--azul);
+  color: #080810;
+}
+
+.btn-eliminar {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  background: transparent;
+  color: #ff4444;
+  border: 0.5px solid #ff4444;
+}
+
+.btn-eliminar:hover {
+  background: #2a0a0a;
+}

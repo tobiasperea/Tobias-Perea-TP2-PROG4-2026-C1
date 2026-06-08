@@ -21,10 +21,15 @@ export class Publicaciones implements OnInit {
   offset = 0;
   hayMas = true;
 
+  mostrarFormulario = false;
+  nuevoTitulo = '';
+  nuevaDescripcion = '';
+  nuevaImagenUrl = '';
+
   constructor(
     private publicacionesService: PublicacionesService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cargar();
@@ -56,5 +61,21 @@ export class Publicaciones implements OnInit {
   paginaSiguiente() {
     this.offset += this.limit;
     this.cargar();
+  }
+
+  crearPublicacion() {
+    if (!this.nuevoTitulo || !this.nuevaDescripcion) return;
+
+    this.publicacionesService.crearPublicacion({
+      titulo: this.nuevoTitulo,
+      descripcion: this.nuevaDescripcion,
+      imagenUrl: this.nuevaImagenUrl || undefined
+    }).subscribe(() => {
+      this.nuevoTitulo = '';
+      this.nuevaDescripcion = '';
+      this.nuevaImagenUrl = '';
+      this.mostrarFormulario = false;
+      this.cargar();
+    });
   }
 }

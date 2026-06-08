@@ -1,7 +1,28 @@
 <div class="perfil-wrapper">
-  <h1>Mi Perfil</h1>
-  <div *ngIf="auth.usuario()">
-    <p>{{ auth.usuario()?.nombre }} {{ auth.usuario()?.apellido }}</p>
-    <p>@{{ auth.usuario()?.username }}</p>
+
+  <div class="perfil-header" *ngIf="usuario">
+    <div class="avatar">
+      {{ usuario.nombre?.charAt(0) }}{{ usuario.apellido?.charAt(0) }}
+    </div>
+    <div class="perfil-info">
+      <h1>{{ usuario.nombre }} {{ usuario.apellido }}</h1>
+      <p class="username">@{{ usuario.username }}</p>
+      <p class="email">{{ usuario.email }}</p>
+      <p class="descripcion" *ngIf="usuario.descripcion">{{ usuario.descripcion }}</p>
+    </div>
   </div>
+
+  <div class="ultimas-publicaciones">
+    <h2>Mis últimas publicaciones</h2>
+
+    <p *ngIf="ultimasPublicaciones.length === 0" class="vacio">
+      Todavía no publicaste nada
+    </p>
+
+    <app-publicacion
+      *ngFor="let pub of ultimasPublicaciones"
+      [publicacion]="pub">
+    </app-publicacion>
+  </div>
+
 </div>

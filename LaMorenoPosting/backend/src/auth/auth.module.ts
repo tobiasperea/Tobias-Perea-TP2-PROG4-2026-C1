@@ -14,7 +14,7 @@ import { User, UserSchema } from '../users/schemas/user.schema';
       }
     ]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'secreto',
+      secret: process.env.JWT_SECRET || 'algoclavemuysecreta123',
       signOptions: { expiresIn: '15m' }
     })
   ],
