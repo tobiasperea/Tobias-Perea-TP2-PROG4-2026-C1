@@ -51,4 +51,10 @@ export class PublicacionesService {
       { headers: this.headers() }
     );
   }
+
+  obtenerPublicacionPorId(id: string) {
+    return this.http.get(
+      `${environment.apiUrl}/publicaciones/${id}`
+    );
+  }
 }

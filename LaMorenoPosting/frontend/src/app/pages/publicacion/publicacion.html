@@ -1,0 +1,21 @@
+<div *ngIf="publicacion">
+
+    <h1>{{ publicacion.titulo }}</h1>
+
+    <p>{{ publicacion.descripcion }}</p>
+
+    <p>
+        Likes: {{ publicacion.likes.length }}
+    </p>
+
+    <hr>
+
+    <h2>Comentarios</h2>
+
+    <div *ngFor="let comentario of comentarios">
+
+        <p>{{ comentario.contenido }}</p>
+
+    </div>
+
+</div>

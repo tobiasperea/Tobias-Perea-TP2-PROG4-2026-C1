@@ -99,4 +99,10 @@ export class PublicacionesService {
             { new: true }
         );
     }
+
+    async obtenerPorId(id: string) {
+
+        return this.publicacionModel.findById(id);
+
+    }
 }

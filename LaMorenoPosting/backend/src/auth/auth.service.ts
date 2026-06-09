@@ -6,7 +6,7 @@ import { User, UserDocument } from '../users/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-
+import { verify } from 'jsonwebtoken';
 @Injectable()
 export class AuthService {
 
@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     async login(loginDto: LoginDto) {
-        
+
         const usuario = await this.userModel.findOne({
             $or: [
                 { email: loginDto.identificador },
@@ -69,5 +69,30 @@ export class AuthService {
                 descripcion: usuario.descripcion
             }
         };
+    }
+    async autorizar(token: string) {
+        try {
+            const verificado = verify(token, process.env.JWT_SECRET!) as any;
+            const usuario = await this.userModel.findById(verificado.sub).select('-password');
+            if (!usuario) throw new Error();
+            return usuario;
+        } catch {
+            throw new UnauthorizedException('Token inválido');
+        }
+    }
+
+    async refrescar(token: string) {
+        try {
+            const verificado = verify(token, process.env.JWT_SECRET!) as any;
+            const payload = {
+                sub: verificado.sub,
+                username: verificado.username,
+                perfil: verificado.perfil
+            };
+            const nuevoToken = this.jwtService.sign(payload);
+            return { token: nuevoToken };
+        } catch {
+            throw new UnauthorizedException('Token inválido');
+        }
     }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { PublicacionesService } from '../../services/publicaciones.service';
 
@@ -25,7 +26,8 @@ export class Publicacion {
 
   constructor(
     private publicacionesService: PublicacionesService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   darLike() {
@@ -69,6 +71,14 @@ export class Publicacion {
       .subscribe(() => {
         this.eliminada.emit();
       });
+  }
+  verPublicacion() {
+
+    this.router.navigate([
+      '/publicacion',
+      this.publicacion._id
+    ]);
+
   }
 
 }

@@ -1,30 +1,49 @@
-<div class="publicacion-card">
+<div class="publicacion-card"
+     (click)="verPublicacion()">
 
   <div class="publicacion-meta">
-    <span class="publicacion-autor">@{{ publicacion.usuarioId }}</span>
-    <span class="publicacion-likes">❤️ {{ publicacion.likes.length }}</span>
+    <span class="publicacion-autor">
+      @{{ publicacion.usuarioId }}
+    </span>
+
+    <span class="publicacion-likes">
+      ❤️ {{ publicacion.likes.length }}
+    </span>
   </div>
 
-  <h3 class="publicacion-titulo">{{ publicacion.titulo }}</h3>
-  <p class="publicacion-descripcion">{{ publicacion.descripcion }}</p>
+  <h3 class="publicacion-titulo">
+    {{ publicacion.titulo }}
+  </h3>
 
-  <img *ngIf="publicacion.imagenUrl" 
-       [src]="publicacion.imagenUrl" 
+  <p class="publicacion-descripcion">
+    {{ publicacion.descripcion }}
+  </p>
+
+  <img *ngIf="publicacion.imagenUrl"
+       [src]="publicacion.imagenUrl"
        class="publicacion-imagen"
        alt="imagen">
 
   <div class="publicacion-acciones">
-    <button class="btn-like" 
-            [class.activo]="tieneLike()"
-            (click)="tieneLike() ? quitarLike() : darLike()">
+
+    <button
+      class="btn-like"
+      [class.activo]="tieneLike()"
+      (click)="tieneLike() ? quitarLike() : darLike(); $event.stopPropagation()">
+
       {{ tieneLike() ? '💔 Quitar like' : '❤️ Like' }}
+
     </button>
 
-    <button class="btn-eliminar" 
-            *ngIf="publicacion.usuarioId === usuarioActual"
-            (click)="eliminar()">
+    <button
+      class="btn-eliminar"
+      *ngIf="publicacion.usuarioId === usuarioActual"
+      (click)="eliminar(); $event.stopPropagation()">
+
       🗑️ Eliminar
+
     </button>
+
   </div>
 
 </div>

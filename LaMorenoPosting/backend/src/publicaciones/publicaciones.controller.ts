@@ -74,5 +74,14 @@ export class PublicacionesController {
         return this.publicacionesService.quitarLike(id, usuarioId);
     }
 
+    @Get(':id')
+    obtenerPorId(
+        @Param('id') id: string
+    ) {
+
+        return this.publicacionesService.obtenerPorId(id);
+
+    }
+
 
 }
