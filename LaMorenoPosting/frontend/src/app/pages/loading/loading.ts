@@ -38,7 +38,7 @@ export class Loading implements OnInit {
 
             this.router.navigate(['/publicaciones']);
 
-          }, 3000);
+          }, 1500);
 
          
 
@@ -53,7 +53,7 @@ export class Loading implements OnInit {
 
             this.router.navigate(['/login']);
 
-          }, 3000);
+          }, 1500);
 
           
 
