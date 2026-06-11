@@ -44,7 +44,7 @@ export class Login {
     }).subscribe({
       next: (res) => {
         this.auth.setUsuario(res.usuario, res.token);
-        this.router.navigate(['/publicaciones']);
+        this.router.navigate(['/loading']);
       },
       error: (err) => {
         this.errorMsg = err.status === 401 
