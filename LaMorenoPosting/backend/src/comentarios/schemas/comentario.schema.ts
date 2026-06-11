@@ -13,10 +13,16 @@ export class Comentario {
     usuarioId!: string;
 
     @Prop({ required: true })
+    username!: string;
+
+    @Prop({ required: true })
     publicacionId!: string;
 
     @Prop({ default: true })
     activo!: boolean;
+
+    @Prop({ default: false })
+    modificado!: boolean;
 }
 
 export const ComentarioSchema =

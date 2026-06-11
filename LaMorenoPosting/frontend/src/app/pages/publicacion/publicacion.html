@@ -1,21 +1,68 @@
-<div *ngIf="publicacion">
+<div class="publicacion-page">
 
-    <h1>{{ publicacion.titulo }}</h1>
+  <button class="btn-volver" routerLink="/publicaciones">← Volver</button>
 
-    <p>{{ publicacion.descripcion }}</p>
+  <div class="pub-card" *ngIf="publicacion">
+    <div class="pub-meta">
+      <span>@{{ publicacion.username }}</span>
+    </div>
 
-    <p>
-        Likes: {{ publicacion.likes.length }}
-    </p>
+    <h1 class="pub-titulo">{{ publicacion.titulo }}</h1>
+    <p class="pub-descripcion">{{ publicacion.descripcion }}</p>
 
-    <hr>
+    <img *ngIf="publicacion.imagenUrl" [src]="publicacion.imagenUrl" class="pub-imagen">
 
+    <div class="pub-meta">
+      <span class="pub-likes">❤️ {{ publicacion.likes.length }} likes</span>
+    </div>
+  </div>
+
+  <div class="nuevo-comentario">
+    <textarea [(ngModel)]="nuevoComentario" placeholder="Escribí un comentario..." rows="3">
+    </textarea>
+    <button class="btn-comentar" (click)="crearComentario()">
+      Comentar
+    </button>
+  </div>
+
+  <div class="seccion-comentarios">
     <h2>Comentarios</h2>
 
-    <div *ngFor="let comentario of comentarios">
+    <div *ngFor="let comentario of comentarios" class="comentario-card">
 
-        <p>{{ comentario.contenido }}</p>
+      <div *ngIf="comentarioEditando !== comentario._id">
+        <div class="comentario-autor">
+          @{{ comentario.username }}
+        </div>
+
+        <p class="comentario-contenido">{{ comentario.contenido }}</p>
+        <div class="comentario-meta">
+          <small class="comentario-editado" *ngIf="comentario.modificado">
+            ✏️ editado
+          </small>
+          <span *ngIf="!comentario.modificado"></span>
+          <button class="btn-editar" *ngIf="comentario.usuarioId === usuarioActual"
+            (click)="editarComentario(comentario)">
+            ✏️ Editar
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="comentarioEditando === comentario._id" class="edit-form">
+        <textarea [(ngModel)]="textoEditado" rows="3"></textarea>
+        <button class="btn-guardar" (click)="guardarComentario(comentario)">
+          Guardar
+        </button>
+      </div>
 
     </div>
+
+    <div class="cargar-mas" *ngIf="hayMas">
+      <button class="btn-cargar-mas" (click)="cargarComentarios()">
+        Cargar más
+      </button>
+    </div>
+
+  </div>
 
 </div>

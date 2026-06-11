@@ -1,20 +1,24 @@
-import {Controller,Post,Get,Param,Body,Headers,Query} from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Headers, Query, Put } from '@nestjs/common';
 
 import { ComentariosService } from './comentarios.service';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 
 import { verify } from 'jsonwebtoken';
 
-function getUsuarioId(authorization: string): string {
+function getUsuario(authorization: string) {
 
   const token = authorization?.replace('Bearer ', '') || '';
 
   const verificado = verify(
     token,
-    process.env.JWT_SECRET!
+    process.env.JWT_SECRET || 'algoclavemuysecreta123'
   ) as any;
 
-  return verificado.sub;
+  return {
+    usuarioId: verificado.sub,
+    username: verificado.username
+  };
+
 }
 
 @Controller('comentarios')
@@ -22,7 +26,7 @@ export class ComentariosController {
 
   constructor(
     private readonly comentariosService: ComentariosService
-  ) {}
+  ) { }
 
   @Post(':publicacionId')
   crear(
@@ -31,11 +35,12 @@ export class ComentariosController {
     @Headers('authorization') authorization: string
   ) {
 
-    const usuarioId = getUsuarioId(authorization);
+    const usuario = getUsuario(authorization);
 
     return this.comentariosService.crear(
       createComentarioDto,
-      usuarioId,
+      usuario.usuarioId,
+      usuario.username,
       publicacionId
     );
   }
@@ -52,5 +57,18 @@ export class ComentariosController {
       limit,
       offset
     );
+  }
+
+  @Put(':id')
+  editar(
+    @Param('id') id: string,
+    @Body() body: any
+  ) {
+
+    return this.comentariosService.editar(
+      id,
+      body.contenido
+    );
+
   }
 }

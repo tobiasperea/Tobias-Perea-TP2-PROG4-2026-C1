@@ -5,7 +5,8 @@ import { PublicacionesService } from './publicaciones.service';
 import { CreatePublicacionDto } from './dto/create-publicacion.dto';
 import { verify } from 'jsonwebtoken';
 
-function getUsuarioId(authorization: string): string {
+function getUsuario(authorization: string) {
+
     const token = authorization?.replace('Bearer ', '') || '';
 
     const verificado = verify(
@@ -13,7 +14,11 @@ function getUsuarioId(authorization: string): string {
         process.env.JWT_SECRET || 'algoclavemuysecreta123'
     ) as any;
 
-    return verificado.sub;
+    return {
+        usuarioId: verificado.sub,
+        username: verificado.username
+    };
+
 }
 
 @Controller('publicaciones')
@@ -43,7 +48,7 @@ export class PublicacionesController {
         @Param('id') id: string,
         @Headers('authorization') authorization: string
     ) {
-        const usuarioId = getUsuarioId(authorization);
+        const usuarioId = getUsuario(authorization);
         return this.publicacionesService.eliminar(id);
     }
 
@@ -52,8 +57,8 @@ export class PublicacionesController {
         @Body() createPublicacionDto: CreatePublicacionDto,
         @Headers('authorization') authorization: string
     ) {
-        const usuarioId = getUsuarioId(authorization);
-        return this.publicacionesService.crear(createPublicacionDto, usuarioId);
+        const usuario = getUsuario(authorization);
+        return this.publicacionesService.crear(createPublicacionDto, usuario.usuarioId,usuario.username);
     }
 
     @Post(':id/like')
@@ -61,8 +66,8 @@ export class PublicacionesController {
         @Param('id') id: string,
         @Headers('authorization') authorization: string
     ) {
-        const usuarioId = getUsuarioId(authorization);
-        return this.publicacionesService.darLike(id, usuarioId);
+        const usuario = getUsuario(authorization);
+        return this.publicacionesService.darLike(id, usuario.usuarioId);
     }
 
     @Delete(':id/like')
@@ -70,8 +75,8 @@ export class PublicacionesController {
         @Param('id') id: string,
         @Headers('authorization') authorization: string
     ) {
-        const usuarioId = getUsuarioId(authorization);
-        return this.publicacionesService.quitarLike(id, usuarioId);
+        const usuario = getUsuario(authorization);
+        return this.publicacionesService.quitarLike(id, usuario.usuarioId);
     }
 
     @Get(':id')

@@ -17,12 +17,14 @@ export class ComentariosService {
     async crear(
         createComentarioDto: CreateComentarioDto,
         usuarioId: string,
+        username: string,
         publicacionId: string
     ) {
 
         const nuevoComentario = new this.comentarioModel({
             ...createComentarioDto,
             usuarioId,
+            username,
             publicacionId
         });
 
@@ -45,6 +47,24 @@ export class ComentariosService {
             })
             .skip(offset)
             .limit(limit);
+
+    }
+
+    async editar(
+        id: string,
+        contenido: string
+    ) {
+
+        return this.comentarioModel.findByIdAndUpdate(
+            id,
+            {
+                contenido,
+                modificado: true
+            },
+            {
+                new: true
+            }
+        );
 
     }
 }

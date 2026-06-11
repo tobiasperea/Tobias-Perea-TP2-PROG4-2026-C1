@@ -19,12 +19,14 @@ export class PublicacionesService {
 
     async crear(
         createPublicacionDto: CreatePublicacionDto,
-        usuarioId: string
+        usuarioId: string,
+        username: string
     ) {
 
         const nuevaPublicacion = new this.publicacionModel({
             ...createPublicacionDto,
-            usuarioId
+            usuarioId,
+            username
         });
 
         return nuevaPublicacion.save();

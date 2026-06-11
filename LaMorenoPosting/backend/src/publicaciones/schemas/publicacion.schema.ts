@@ -18,6 +18,9 @@ export class Publicacion {
     @Prop({ required: true })
     usuarioId!: string;
 
+    @Prop({ required: true })
+    username!: string;
+
     @Prop({ default: [] })
     likes!: string[];
 

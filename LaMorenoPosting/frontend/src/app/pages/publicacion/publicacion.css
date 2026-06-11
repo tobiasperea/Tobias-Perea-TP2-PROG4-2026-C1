@@ -1,0 +1,154 @@
+.publicacion-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  min-height: 100vh;
+}
+
+.pub-card {
+  background: var(--fondo-card);
+  border: 0.5px solid var(--azul-mid);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.pub-titulo {
+  font-size: 1.4rem;
+  color: var(--azul);
+  margin-bottom: 8px;
+}
+
+.pub-descripcion {
+  font-size: 15px;
+  color: var(--texto);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.pub-imagen {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+}
+
+.pub-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--azul-apagado);
+}
+
+.pub-likes {
+  color: var(--texto);
+}
+
+.seccion-comentarios h2 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.nuevo-comentario {
+  background: var(--fondo-card);
+  border: 0.5px solid var(--azul-mid);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-comentar {
+  width: auto;
+  padding: 7px 16px;
+  font-size: 13px;
+  align-self: flex-end;
+}
+
+.comentario-card {
+  background: var(--fondo-card2);
+  border: 0.5px solid var(--azul-mid);
+  border-radius: var(--border-radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.comentario-contenido {
+  font-size: 14px;
+  color: var(--texto);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.comentario-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comentario-editado {
+  font-size: 11px;
+  color: var(--azul-apagado);
+  font-style: italic;
+}
+
+.btn-editar {
+  width: auto;
+  padding: 4px 10px;
+  font-size: 12px;
+  background: transparent;
+  color: var(--azul-apagado);
+  border: 0.5px solid var(--azul-mid);
+}
+
+.btn-editar:hover {
+  color: var(--azul);
+  border-color: var(--azul);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-guardar {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  align-self: flex-end;
+}
+
+.cargar-mas {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.btn-cargar-mas {
+  width: auto;
+  padding: 7px 20px;
+  font-size: 13px;
+  background: transparent;
+  color: var(--azul);
+  border: 0.5px solid var(--azul);
+}
+
+.btn-volver {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  background: transparent;
+  color: var(--azul-apagado);
+  border: 0.5px solid var(--azul-mid);
+  margin-bottom: 20px;
+}
+.comentario-autor {
+  font-size: 12px;
+  color: var(--azul-apagado);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
