@@ -10,12 +10,26 @@ export class AuthApiService {
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) { }
 
   autorizar(token: string) {
 
     return this.http.post(
       `${this.apiUrl}/autorizar`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+  }
+
+  refrescar(token: string) {
+
+    return this.http.post(
+      `${this.apiUrl}/refrescar`,
       {},
       {
         headers: {
