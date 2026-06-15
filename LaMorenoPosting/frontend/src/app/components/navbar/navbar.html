@@ -5,6 +5,8 @@
 
   <div class="navbar-right" *ngIf="auth.usuario()">
     <a routerLink="/publicaciones">Publicaciones</a>
+    <a routerLink="/dashboard-usuarios" *ngIf="auth.esAdmin()">Admin</a>
+    <a routerLink="/dashboard-estadisticas" *ngIf="auth.esAdmin()">Estadísticas</a>
     <a routerLink="/perfil">Mi Perfil</a>
     <span class="username">@{{ auth.usuario()?.username }}</span>
     <button class="outline logout-btn" (click)="logout()">Salir</button>

@@ -11,6 +11,7 @@ import { CompartidosModule } from './compartidos/compartidos.module';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { EstadisticasModule } from './estadisticas/estadisticas.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { ConfigModule } from '@nestjs/config';
     ComentariosModule,
     GuardadosModule,
     AdminModule,
-    CompartidosModule
+    CompartidosModule,
+    EstadisticasModule
   ],
 
   controllers: [AppController],

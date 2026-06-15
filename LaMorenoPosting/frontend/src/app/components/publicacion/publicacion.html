@@ -37,7 +37,7 @@
 
     <button
       class="btn-eliminar"
-      *ngIf="publicacion.usuarioId === usuarioActual"
+      *ngIf="publicacion.usuarioId === usuarioActual || esAdmin"
       (click)="eliminar(); $event.stopPropagation()">
 
       🗑️ Eliminar

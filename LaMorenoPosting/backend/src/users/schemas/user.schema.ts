@@ -32,6 +32,9 @@ export class User {
 
   @Prop({ default: 'usuario' })
   perfil!: string;
+
+  @Prop({ default: true })
+  activo!: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

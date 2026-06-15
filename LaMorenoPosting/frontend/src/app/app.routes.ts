@@ -33,6 +33,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/perfil/perfil').then(m => m.Perfil)
   },
   {
+    path: 'dashboard-usuarios',
+    loadComponent: () => import('./pages/dashboard-usuarios/dashboard-usuarios').then(m => m.DashboardUsuarios)
+  },
+  {
+    path: 'dashboard-estadisticas',
+    loadComponent: () => import('./pages/dashboard-estadisticas/dashboard-estadisticas').then(m => m.DashboardEstadisticas)
+  },
+  {
     path: '**',
     loadComponent: () => import('./pages/error/error').then(m => m.Error)
   }

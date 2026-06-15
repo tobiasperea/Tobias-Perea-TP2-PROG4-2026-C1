@@ -1,1 +1,54 @@
-<p>dashboard-usuarios works!</p>
+<div class="dashboard-wrapper">
+
+  <div class="dashboard-header">
+    <h1>👥 Usuarios</h1>
+    <button (click)="mostrarFormulario = !mostrarFormulario" style="width:auto; padding: 7px 16px; font-size:13px;">
+      + Nuevo usuario
+    </button>
+  </div>
+
+  <div class="form-nuevo" *ngIf="mostrarFormulario">
+    <div class="form-fila">
+      <input [(ngModel)]="nuevoUsuario.nombre" placeholder="Nombre">
+      <input [(ngModel)]="nuevoUsuario.apellido" placeholder="Apellido">
+    </div>
+    <input [(ngModel)]="nuevoUsuario.email" type="email" placeholder="Correo">
+    <input [(ngModel)]="nuevoUsuario.username" placeholder="Usuario">
+    <input [(ngModel)]="nuevoUsuario.password" type="password" placeholder="Contraseña">
+    <input [(ngModel)]="nuevoUsuario.fechaNacimiento" type="date" placeholder="Fecha de nacimiento">
+    <textarea [(ngModel)]="nuevoUsuario.descripcion" placeholder="Descripción" rows="2"></textarea>
+    <div class="perfil-selector">
+      <label>
+        <input type="radio" [(ngModel)]="nuevoUsuario.perfil" value="usuario"> Usuario
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="nuevoUsuario.perfil" value="administrador"> Administrador
+      </label>
+    </div>
+    <div class="form-btns">
+      <button (click)="crearUsuario()" [disabled]="cargando">Crear</button>
+      <button class="outline" (click)="mostrarFormulario = false">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="tabla-usuarios">
+    <div class="usuario-row" *ngFor="let u of usuarios">
+      <div class="usuario-info">
+        <span class="usuario-nombre">{{ u.nombre }} {{ u.apellido }}</span>
+        <span class="usuario-username">@{{ u.username }}</span>
+        <span class="usuario-perfil" [class.admin]="u.perfil === 'administrador'">
+          {{ u.perfil }}
+        </span>
+      </div>
+      <div class="usuario-acciones">
+        <button class="btn-deshabilitar" *ngIf="u.activo" (click)="deshabilitar(u._id)">
+          Deshabilitar
+        </button>
+        <button class="btn-habilitar" *ngIf="!u.activo" (click)="habilitar(u._id)">
+          Habilitar
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,53 @@
+.estadisticas-wrapper {
+  padding: 32px 48px;
+  min-height: 100vh;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.estadisticas-wrapper h1 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.filtros {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.filtro-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filtro-campo label {
+  font-size: 13px;
+  color: var(--azul-apagado);
+}
+
+.filtro-campo input {
+  width: auto;
+}
+
+.graficos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.grafico-card {
+  background: var(--fondo-card);
+  border: 0.5px solid var(--azul-mid);
+  border-radius: var(--border-radius);
+  padding: 24px;
+}
+
+.grafico-card h2 {
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  color: var(--azul-apagado);
+}

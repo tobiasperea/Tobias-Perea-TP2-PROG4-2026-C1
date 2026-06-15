@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 import { PublicacionesService } from '../../services/publicaciones.service';
 
@@ -27,7 +28,8 @@ export class Publicacion {
   constructor(
     private publicacionesService: PublicacionesService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) { }
 
   darLike() {
@@ -79,6 +81,10 @@ export class Publicacion {
       this.publicacion._id
     ]);
 
+  }
+
+  get esAdmin() {
+    return this.auth.esAdmin();
   }
 
 }

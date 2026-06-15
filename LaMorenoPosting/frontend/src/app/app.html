@@ -1,2 +1,13 @@
 <app-navbar></app-navbar>
 <router-outlet />
+
+<div class="modal-overlay" *ngIf="session.mostrarModal()">
+  <div class="modal-sesion">
+    <h2>⏰ Sesión por vencer</h2>
+    <p>Tu sesión vence en 5 minutos. ¿Querés extenderla?</p>
+    <div class="modal-btns">
+      <button (click)="session.extender()">Extender sesión</button>
+      <button class="outline" (click)="session.cerrar()">Cerrar sesión</button>
+    </div>
+  </div>
+</div>

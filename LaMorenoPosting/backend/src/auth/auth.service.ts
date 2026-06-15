@@ -47,6 +47,9 @@ export class AuthService {
         if (!passwordValido) {
             throw new UnauthorizedException('Contraseña incorrecta');
         }
+        if (usuario.activo === false) {
+            throw new UnauthorizedException('Tu cuenta está deshabilitada');
+        }
 
         const payload = {
             sub: usuario._id,

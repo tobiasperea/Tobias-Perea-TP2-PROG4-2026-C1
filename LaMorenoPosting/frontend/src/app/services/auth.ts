@@ -51,4 +51,8 @@ export class AuthService {
     return this.usuario() !== null;
   }
 
+  esAdmin() {
+    return this.usuario()?.perfil === 'administrador';
+  }
+
 }
