@@ -25,8 +25,18 @@
       <label>Foto de perfil (opcional)</label>
       <input type="file" accept="image/*" (change)="onImagenSeleccionada($event)">
     </div>
+    <div class="perfil-selector">
+      <label>
+        <input type="radio" [(ngModel)]="perfil" value="usuario"> Usuario
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="perfil" value="administrador"> Administrador
+      </label>
+    </div>
 
     <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+
 
     <button (click)="registrar()" [disabled]="cargando">
       {{ cargando ? 'Registrando...' : 'Registrarse' }}

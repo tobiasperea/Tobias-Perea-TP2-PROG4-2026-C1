@@ -85,3 +85,38 @@
 .btn-eliminar:hover {
   background: #2a0a0a;
 }
+
+.comentarios-preview {
+  margin-top: 12px;
+  border-top: 0.5px solid var(--azul-mid);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comentario-preview {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.comentario-username {
+  color: var(--azul);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.comentario-texto {
+  color: var(--azul-apagado);
+}
+
+.ver-mas {
+  font-size: 12px;
+  color: var(--azul-apagado);
+  margin-top: 4px;
+}
+
+.ver-mas:hover {
+  color: var(--azul);
+}

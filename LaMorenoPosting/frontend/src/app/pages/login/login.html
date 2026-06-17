@@ -19,5 +19,12 @@
       ¿No tenés cuenta? Registrate
     </button>
 
+    <div class="separador">— acceso rápido —</div>
+    <div class="botones-rapidos">
+      <button class="outline" *ngFor="let u of usuariosPrueba" (click)="loginRapido(u)">
+        {{ u.label }}
+      </button>
+    </div>
+
   </div>
 </div>

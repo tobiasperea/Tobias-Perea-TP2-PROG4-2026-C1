@@ -17,15 +17,11 @@ export class AuthService {
     ) { }
 
     async register(registerDto: RegisterDto) {
-
         const hashedPassword = await bcrypt.hash(registerDto.password, 10);
-
         const nuevoUsuario = new this.userModel({
             ...registerDto,
-            password: hashedPassword,
-            perfil: 'usuario'
+            password: hashedPassword
         });
-
         return nuevoUsuario.save();
     }
 

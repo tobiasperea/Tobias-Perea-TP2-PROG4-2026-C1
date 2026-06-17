@@ -39,3 +39,17 @@
   font-size: 13px;
   color: var(--azul-apagado);
 }
+.perfil-selector {
+  display: flex;
+  gap: 20px;
+  color: var(--texto);
+  font-size: 14px;
+  align-items: center;
+}
+
+.perfil-selector label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}

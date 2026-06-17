@@ -1,49 +1,41 @@
-<div class="publicacion-card"
-     (click)="verPublicacion()">
+<div class="publicacion-card" [appResaltar]="'#0f1a2a'" (click)="irAPublicacion()">
 
   <div class="publicacion-meta">
-    <span class="publicacion-autor">
-      @{{ publicacion.username }}
-    </span>
-
-    <span class="publicacion-likes">
-      ❤️ {{ publicacion.likes.length }}
-    </span>
+    <span class="publicacion-autor">@{{ publicacion.username || publicacion.usuarioId }}</span>
+    <span class="publicacion-likes">❤️ {{ publicacion.likes.length }}</span>
+    <span class="publicacion-fecha">{{ publicacion.createdAt | fechaRelativa }}</span>
   </div>
 
-  <h3 class="publicacion-titulo">
-    {{ publicacion.titulo }}
-  </h3>
+  <h3 class="publicacion-titulo">{{ publicacion.titulo | capitalize }}</h3>
+  <p class="publicacion-descripcion">{{ publicacion.descripcion | truncar:150 }}</p>
 
-  <p class="publicacion-descripcion">
-    {{ publicacion.descripcion }}
-  </p>
-
-  <img *ngIf="publicacion.imagenUrl"
-       [src]="publicacion.imagenUrl"
-       class="publicacion-imagen"
-       alt="imagen">
+  <img *ngIf="publicacion.imagenUrl" [src]="publicacion.imagenUrl" class="publicacion-imagen" alt="imagen">
 
   <div class="publicacion-acciones">
 
-    <button
-      class="btn-like"
-      [class.activo]="tieneLike()"
+    <button class="btn-like" [class.activo]="tieneLike()"
       (click)="tieneLike() ? quitarLike() : darLike(); $event.stopPropagation()">
 
       {{ tieneLike() ? '💔 Quitar like' : '❤️ Like' }}
 
     </button>
 
-    <button
-      class="btn-eliminar"
-      *ngIf="publicacion.usuarioId === usuarioActual || esAdmin"
+    <button class="btn-eliminar" *ngIf="publicacion.usuarioId === usuarioActual || esAdmin"
       (click)="eliminar(); $event.stopPropagation()">
 
       🗑️ Eliminar
 
     </button>
 
+  </div>
+  <div class="comentarios-preview" *ngIf="publicacion.comentariosPreview?.length > 0">
+    <div class="comentario-preview" *ngFor="let c of publicacion.comentariosPreview">
+      <span class="comentario-username">@{{ c.username }}</span>
+      <span class="comentario-texto">{{ c.contenido | truncar:80 }}</span>
+    </div>
+    <a [routerLink]="['/publicacion', publicacion._id]" class="ver-mas">
+      Ver todos los comentarios →
+    </a>
   </div>
 
 </div>

@@ -2,7 +2,8 @@ import {
   IsEmail,
   IsNotEmpty,
   MinLength,
-  Matches
+  Matches,
+  IsOptional, IsString
 } from 'class-validator';
 
 export class RegisterDto {
@@ -32,4 +33,7 @@ export class RegisterDto {
   fechaNacimiento!: string;
 
   descripcion!: string;
+  @IsOptional()
+  @IsString()
+  perfil?: string;
 }

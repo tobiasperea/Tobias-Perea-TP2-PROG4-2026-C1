@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Comentario, ComentarioDocument } from '../comentarios/schemas/comentario.schema';
 
 import {
     Publicacion,
@@ -14,7 +15,9 @@ export class PublicacionesService {
 
     constructor(
         @InjectModel(Publicacion.name)
-        private publicacionModel: Model<PublicacionDocument>
+        private publicacionModel: Model<PublicacionDocument>,
+        @InjectModel(Comentario.name)
+        private comentarioModel: Model<ComentarioDocument>
     ) { }
 
     async crear(
@@ -32,40 +35,32 @@ export class PublicacionesService {
         return nuevaPublicacion.save();
     }
 
-    async listar(
-        orden = 'fecha',
-        limit = 10,
-        offset = 0,
-        usuarioId?: string
-    ) {
-
-        const filtro: any = {
-            activo: true
-        };
-
-        if (usuarioId) {
-            filtro.usuarioId = usuarioId;
-        }
+    async listar(orden = 'fecha', limit = 10, offset = 0, usuarioId?: string) {
+        const filtro: any = { activo: true };
+        if (usuarioId) filtro.usuarioId = usuarioId;
 
         let query = this.publicacionModel.find(filtro);
 
         if (orden === 'likes') {
-
-            query = query.sort({
-                likes: -1
-            });
-
+            query = query.sort({ likes: -1 });
         } else {
-
-            query = query.sort({
-                createdAt: -1
-            });
-
+            query = query.sort({ createdAt: -1 });
         }
 
-        return query
-            .skip(Number(offset))
-            .limit(Number(limit));
+        const publicaciones = await query.skip(Number(offset)).limit(Number(limit));
+
+        
+        const resultado = await Promise.all(
+            publicaciones.map(async (pub) => {
+                const comentarios = await this.comentarioModel
+                    .find({ publicacionId: pub._id.toString(), activo: true })
+                    .sort({ createdAt: -1 })
+                    .limit(2);
+                return { ...pub.toObject(), comentariosPreview: comentarios };
+            })
+        );
+
+        return resultado;
     }
 
     async eliminar(id: string) {

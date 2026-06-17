@@ -1,16 +1,3 @@
-<div class="nuevo-post" *ngIf="!mostrarFormulario">
-  <button (click)="mostrarFormulario = true">+ Nueva publicación</button>
-</div>
-
-<div class="form-post" *ngIf="mostrarFormulario">
-  <input [(ngModel)]="nuevoTitulo" placeholder="Título">
-  <textarea [(ngModel)]="nuevaDescripcion" placeholder="¿Qué está pasando en La Moreno?" rows="3"></textarea>
-  <input [(ngModel)]="nuevaImagenUrl" placeholder="URL de imagen (opcional)">
-  <div class="form-btns">
-    <button (click)="crearPublicacion()">Publicar</button>
-    <button class="outline" (click)="mostrarFormulario = false">Cancelar</button>
-  </div>
-</div>
 <div class="publicaciones-wrapper">
 
   <div class="publicaciones-header">
@@ -22,6 +9,20 @@
       <button [class.active]="orden === 'likes'" (click)="cambiarOrden('likes')">
         ❤️ Likes
       </button>
+    </div>
+  </div>
+
+  <div class="nuevo-post" *ngIf="!mostrarFormulario">
+    <button (click)="mostrarFormulario = true">+ Nueva publicación</button>
+  </div>
+
+  <div class="form-post" *ngIf="mostrarFormulario" (appClickFuera)="mostrarFormulario = false">
+    <input [(ngModel)]="nuevoTitulo" placeholder="Título">
+    <textarea [(ngModel)]="nuevaDescripcion" placeholder="¿Qué está pasando en La Moreno?" rows="3" appAutoFocus></textarea>
+    <input [(ngModel)]="nuevaImagenUrl" placeholder="URL de imagen (opcional)">
+    <div class="form-btns">
+      <button (click)="crearPublicacion()">Publicar</button>
+      <button class="outline" (click)="mostrarFormulario = false">Cancelar</button>
     </div>
   </div>
 

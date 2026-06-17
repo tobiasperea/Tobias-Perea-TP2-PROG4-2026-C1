@@ -5,11 +5,13 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { Publicacion } from '../../components/publicacion/publicacion';
+import { ClickFueraDirective } from '../../directives/click-fuera.directive';
+import { AutoFocusDirective } from '../../directives/auto-focus.directive';
 
 @Component({
   selector: 'app-publicaciones',
   standalone: true,
-  imports: [CommonModule, FormsModule, Navbar, Publicacion],
+  imports: [CommonModule, FormsModule, Navbar, Publicacion, ClickFueraDirective,AutoFocusDirective],
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css'
 })

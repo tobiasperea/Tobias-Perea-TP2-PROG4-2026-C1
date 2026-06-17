@@ -25,6 +25,7 @@ export class Register {
   imagenPerfil: File | null = null;
   errorMsg = '';
   cargando = false;
+  perfil = 'usuario';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -73,7 +74,8 @@ export class Register {
       username: this.username,
       password: this.password,
       fechaNacimiento: this.fechaNacimiento,
-      descripcion: this.descripcion
+      descripcion: this.descripcion,
+      perfil: this.perfil
     }).subscribe({
       next: () => {
         this.router.navigate(['/login']);

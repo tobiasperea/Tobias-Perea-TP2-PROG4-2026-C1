@@ -1,14 +1,18 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { FechaRelativaPipe } from '../../pipes/fecha-relativa.pipe';
+import { TruncarPipe } from '../../pipes/truncar.pipe';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
+import { ResaltarDirective } from '../../directives/resaltar.directive';
 
 import { PublicacionesService } from '../../services/publicaciones.service';
 
 @Component({
   selector: 'app-publicacion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FechaRelativaPipe, TruncarPipe, CapitalizePipe, ResaltarDirective, RouterLink],
   templateUrl: './publicacion.html',
   styleUrl: './publicacion.css',
 })
@@ -85,6 +89,10 @@ export class Publicacion {
 
   get esAdmin() {
     return this.auth.esAdmin();
+  }
+
+  irAPublicacion() {
+    this.router.navigate(['/publicacion', this.publicacion._id]);
   }
 
 }

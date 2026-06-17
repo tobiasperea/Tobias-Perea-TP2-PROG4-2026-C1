@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -20,8 +20,12 @@ export class Login {
   password = '';
   errorMsg = '';
   cargando = false;
+  usuariosPrueba = [
+    { label: 'Admin', identificador: 'tobias', password: 'Hola1234' },
+    { label: 'Usuario', identificador: 'accesorapido', password: 'A12345678' }
+  ];
 
-  constructor(private http: HttpClient, private router: Router, public auth: AuthService) {}
+  constructor(private http: HttpClient, private router: Router, public auth: AuthService) { }
 
   login() {
     this.errorMsg = '';
@@ -47,11 +51,15 @@ export class Login {
         this.router.navigate(['/loading']);
       },
       error: (err) => {
-        this.errorMsg = err.status === 401 
-          ? 'Usuario o contraseña incorrectos' 
+        this.errorMsg = err.status === 401
+          ? 'Usuario o contraseña incorrectos'
           : 'Error al iniciar sesión';
         this.cargando = false;
       }
     });
+  }
+  loginRapido(usuario: any) {
+    this.identificador = usuario.identificador;
+    this.password = usuario.password;
   }
 }
