@@ -20,4 +20,17 @@ export class UsersService {
             .findById(id)
             .select('-password');
     }
+
+    async actualizarPerfil(id: string, datos: any) {
+        return this.userModel.findByIdAndUpdate(
+            id,
+            {
+                nombre: datos.nombre,
+                apellido: datos.apellido,
+                descripcion: datos.descripcion,
+                username: datos.username
+            },
+            { new: true }
+        ).select('-password');
+    }
 }

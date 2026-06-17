@@ -4,21 +4,34 @@
     <div class="avatar">
       {{ usuario.nombre?.charAt(0) }}{{ usuario.apellido?.charAt(0) }}
     </div>
-    <div class="perfil-info">
+
+    <div class="perfil-info" *ngIf="!editando">
       <h1>{{ usuario.nombre }} {{ usuario.apellido }}</h1>
       <p class="username">@{{ usuario.username }}</p>
       <p class="email">{{ usuario.email }}</p>
       <p class="descripcion" *ngIf="usuario.descripcion">{{ usuario.descripcion }}</p>
+      <button class="btn-editar-perfil" (click)="editando = true">✏️ Editar perfil</button>
+    </div>
+
+    <div class="perfil-info" *ngIf="editando">
+      <div class="edit-fila">
+        <input [(ngModel)]="datosEdicion.nombre" placeholder="Nombre">
+        <input [(ngModel)]="datosEdicion.apellido" placeholder="Apellido">
+      </div>
+      <input [(ngModel)]="datosEdicion.username" placeholder="Username">
+      <textarea [(ngModel)]="datosEdicion.descripcion" placeholder="Descripción" rows="2"></textarea>
+      <div class="edit-btns">
+        <button (click)="guardarPerfil()">Guardar</button>
+        <button class="outline" (click)="editando = false">Cancelar</button>
+      </div>
     </div>
   </div>
 
   <div class="ultimas-publicaciones">
     <h2>Mis últimas publicaciones</h2>
-
     <p *ngIf="ultimasPublicaciones.length === 0" class="vacio">
       Todavía no publicaste nada
     </p>
-
     <app-publicacion
       *ngFor="let pub of ultimasPublicaciones"
       [publicacion]="pub">
