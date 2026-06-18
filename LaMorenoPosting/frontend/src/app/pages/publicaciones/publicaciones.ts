@@ -11,7 +11,7 @@ import { AutoFocusDirective } from '../../directives/auto-focus.directive';
 @Component({
   selector: 'app-publicaciones',
   standalone: true,
-  imports: [CommonModule, FormsModule, Navbar, Publicacion, ClickFueraDirective,AutoFocusDirective],
+  imports: [CommonModule, FormsModule, Navbar, Publicacion, ClickFueraDirective, AutoFocusDirective],
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css'
 })
@@ -21,12 +21,13 @@ export class Publicaciones implements OnInit {
   orden = 'fecha';
   limit = 5;
   offset = 0;
-  hayMas = true;
+  hayMas = false;
 
   mostrarFormulario = false;
   nuevoTitulo = '';
   nuevaDescripcion = '';
   nuevaImagenUrl = '';
+  imagenFile: File | null = null;
 
   constructor(
     private publicacionesService: PublicacionesService,
@@ -64,20 +65,30 @@ export class Publicaciones implements OnInit {
     this.offset += this.limit;
     this.cargar();
   }
+  onImagenSeleccionada(event: any) {
+    this.imagenFile = event.target.files[0];
+  }
 
   crearPublicacion() {
     if (!this.nuevoTitulo || !this.nuevaDescripcion) return;
 
-    this.publicacionesService.crearPublicacion({
-      titulo: this.nuevoTitulo,
-      descripcion: this.nuevaDescripcion,
-      imagenUrl: this.nuevaImagenUrl || undefined
-    }).subscribe(() => {
+    const formData = new FormData();
+    formData.append('titulo', this.nuevoTitulo);
+    formData.append('descripcion', this.nuevaDescripcion);
+    if (this.imagenFile) {
+      formData.append('imagen', this.imagenFile);
+    } else if (this.nuevaImagenUrl) {
+      formData.append('imagenUrl', this.nuevaImagenUrl);
+    }
+
+    this.publicacionesService.crearPublicacion(formData).subscribe(() => {
       this.nuevoTitulo = '';
       this.nuevaDescripcion = '';
       this.nuevaImagenUrl = '';
+      this.imagenFile = null;
       this.mostrarFormulario = false;
       this.cargar();
     });
   }
+
 }

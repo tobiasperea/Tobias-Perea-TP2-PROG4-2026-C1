@@ -36,4 +36,7 @@ export class RegisterDto {
   @IsOptional()
   @IsString()
   perfil?: string;
+  @IsOptional()
+  @IsString()
+  imagenPerfil?: string;
 }

@@ -1,14 +1,14 @@
-import { Body, Controller, Post, Get, Delete, Param, Query, Headers } from '@nestjs/common';
+import { Body, Controller, Post, Get, Delete, Param, Query, Headers, UseInterceptors, UploadedFile } from '@nestjs/common';
 
 import { PublicacionesService } from './publicaciones.service';
 
 import { CreatePublicacionDto } from './dto/create-publicacion.dto';
 import { verify } from 'jsonwebtoken';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 function getUsuario(authorization: string) {
-
     const token = authorization?.replace('Bearer ', '') || '';
-
     const verificado = verify(
         token,
         process.env.JWT_SECRET || 'algoclavemuysecreta123'
@@ -16,16 +16,17 @@ function getUsuario(authorization: string) {
 
     return {
         usuarioId: verificado.sub,
-        username: verificado.username
+        username: verificado.username,
+        imagenPerfil: verificado.imagenPerfil
     };
-
 }
 
 @Controller('publicaciones')
 export class PublicacionesController {
 
     constructor(
-        private readonly publicacionesService: PublicacionesService
+        private readonly publicacionesService: PublicacionesService,
+        private readonly cloudinaryService: CloudinaryService
     ) { }
 
     @Get()
@@ -53,12 +54,25 @@ export class PublicacionesController {
     }
 
     @Post()
-    crear(
+    @UseInterceptors(FileInterceptor('imagen'))
+    async crear(
         @Body() createPublicacionDto: CreatePublicacionDto,
-        @Headers('authorization') authorization: string
+        @Headers('authorization') authorization: string,
+        @UploadedFile() file?: Express.Multer.File
     ) {
-        const usuario = getUsuario(authorization);
-        return this.publicacionesService.crear(createPublicacionDto, usuario.usuarioId,usuario.username);
+        const verificado = getUsuario(authorization);
+
+        let imagenUrl = createPublicacionDto.imagenUrl || '';
+        if (file) {
+            imagenUrl = await this.cloudinaryService.subirImagen(file);
+        }
+
+        return this.publicacionesService.crear(
+            { ...createPublicacionDto, imagenUrl },
+            verificado.usuarioId,
+            verificado.username,
+            verificado.imagenPerfil
+        );
     }
 
     @Post(':id/like')

@@ -4,6 +4,7 @@ import { PublicacionesController } from './publicaciones.controller';
 import { PublicacionesService } from './publicaciones.service';
 import { Publicacion, PublicacionSchema } from './schemas/publicacion.schema';
 import { Comentario, ComentarioSchema } from '../comentarios/schemas/comentario.schema';
+import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { Comentario, ComentarioSchema } from '../comentarios/schemas/comentario.
       { name: Publicacion.name, schema: PublicacionSchema },
       { name: Comentario.name, schema: ComentarioSchema }
     ]),
+    CloudinaryModule
   ],
   controllers: [PublicacionesController],
   providers: [PublicacionesService],

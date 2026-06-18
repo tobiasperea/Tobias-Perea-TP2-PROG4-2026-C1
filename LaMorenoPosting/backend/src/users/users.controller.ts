@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Put, Headers } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, Headers, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { verify } from 'jsonwebtoken';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 import { UsersService } from './users.service';
 
@@ -7,22 +9,35 @@ import { UsersService } from './users.service';
 export class UsersController {
 
     constructor(
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
+        private readonly cloudinaryService: CloudinaryService
     ) { }
 
     @Get(':id')
-    buscarPorId(
-        @Param('id') id: string
-    ) {
+    buscarPorId(@Param('id') id: string) {
         return this.usersService.buscarPorId(id);
     }
+
     @Put('perfil')
-    actualizarPerfil(
+    @UseInterceptors(FileInterceptor('imagenPerfil'))
+    async actualizarPerfil(
         @Headers('authorization') authorization: string,
-        @Body() datos: any
+        @Body() datos: any,
+        @UploadedFile() file?: Express.Multer.File
     ) {
         const token = authorization?.replace('Bearer ', '') || '';
         const verificado = verify(token, process.env.JWT_SECRET!) as any;
-        return this.usersService.actualizarPerfil(verificado.sub, datos);
+
+        let imagenPerfilUrl = datos.imagenPerfil;
+
+        if (file) {
+            imagenPerfilUrl = await this.cloudinaryService.subirImagen(file);
+        }
+
+        return this.usersService.actualizarPerfil(verificado.sub, {
+            ...datos,
+            imagenPerfil: imagenPerfilUrl
+        });
     }
+
 }

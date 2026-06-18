@@ -26,6 +26,8 @@ export class Publicacion {
 
     @Prop({ default: true })
     activo!: boolean;
+    @Prop()
+    imagenPerfil!: string;
 }
 
 export const PublicacionSchema =

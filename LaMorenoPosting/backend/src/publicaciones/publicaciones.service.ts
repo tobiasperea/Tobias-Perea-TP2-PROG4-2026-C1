@@ -23,15 +23,15 @@ export class PublicacionesService {
     async crear(
         createPublicacionDto: CreatePublicacionDto,
         usuarioId: string,
-        username: string
+        username: string,
+        imagenPerfil?: string
     ) {
-
         const nuevaPublicacion = new this.publicacionModel({
             ...createPublicacionDto,
             usuarioId,
-            username
+            username,
+            imagenPerfil
         });
-
         return nuevaPublicacion.save();
     }
 
@@ -49,7 +49,7 @@ export class PublicacionesService {
 
         const publicaciones = await query.skip(Number(offset)).limit(Number(limit));
 
-        
+
         const resultado = await Promise.all(
             publicaciones.map(async (pub) => {
                 const comentarios = await this.comentarioModel

@@ -27,7 +27,7 @@ export class Register {
   cargando = false;
   perfil = 'usuario';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   onImagenSeleccionada(event: any) {
     this.imagenPerfil = event.target.files[0];
@@ -36,8 +36,8 @@ export class Register {
   registrar() {
     this.errorMsg = '';
 
-    if (!this.nombre || !this.apellido || !this.email || !this.username || 
-        !this.password || !this.repetirPassword || !this.fechaNacimiento) {
+    if (!this.nombre || !this.apellido || !this.email || !this.username ||
+      !this.password || !this.repetirPassword || !this.fechaNacimiento) {
       this.errorMsg = 'Completá todos los campos obligatorios';
       return;
     }
@@ -67,25 +67,30 @@ export class Register {
 
     this.cargando = true;
 
-    this.http.post<any>(`${environment.apiUrl}/auth/register`, {
-      nombre: this.nombre,
-      apellido: this.apellido,
-      email: this.email,
-      username: this.username,
-      password: this.password,
-      fechaNacimiento: this.fechaNacimiento,
-      descripcion: this.descripcion,
-      perfil: this.perfil
-    }).subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        this.errorMsg = err.status === 400
-          ? 'El correo o usuario ya están registrados'
-          : 'Error al registrarse';
-        this.cargando = false;
-      }
-    });
+    const formData = new FormData();
+    formData.append('nombre', this.nombre);
+    formData.append('apellido', this.apellido);
+    formData.append('email', this.email);
+    formData.append('username', this.username);
+    formData.append('password', this.password);
+    formData.append('fechaNacimiento', this.fechaNacimiento);
+    formData.append('descripcion', this.descripcion);
+    formData.append('perfil', this.perfil);
+    if (this.imagenPerfil) {
+      formData.append('imagenPerfil', this.imagenPerfil);
+    }
+
+    this.http.post<any>(`${environment.apiUrl}/auth/register`, formData)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          this.errorMsg = err.status === 400
+            ? 'El correo o usuario ya están registrados'
+            : 'Error al registrarse';
+          this.cargando = false;
+        }
+      });
   }
 }

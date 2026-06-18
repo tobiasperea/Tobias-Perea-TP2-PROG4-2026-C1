@@ -18,8 +18,13 @@
 
   <div class="form-post" *ngIf="mostrarFormulario" (appClickFuera)="mostrarFormulario = false">
     <input [(ngModel)]="nuevoTitulo" placeholder="Título">
-    <textarea [(ngModel)]="nuevaDescripcion" placeholder="¿Qué está pasando en La Moreno?" rows="3" appAutoFocus></textarea>
+    <textarea [(ngModel)]="nuevaDescripcion" placeholder="¿Qué está pasando en La Moreno?" rows="3"
+      appAutoFocus></textarea>
     <input [(ngModel)]="nuevaImagenUrl" placeholder="URL de imagen (opcional)">
+    <div class="campo">
+      <label>O subí una imagen</label>
+      <input type="file" accept="image/*" (change)="onImagenSeleccionada($event)">
+    </div>
     <div class="form-btns">
       <button (click)="crearPublicacion()">Publicar</button>
       <button class="outline" (click)="mostrarFormulario = false">Cancelar</button>
@@ -29,12 +34,12 @@
   <app-publicacion *ngFor="let pub of publicaciones" [publicacion]="pub" (eliminada)="cargar()">
   </app-publicacion>
 
-  <div class="paginacion">
-    <button class="outline" (click)="paginaAnterior()" [disabled]="offset === 0">
+  <div class="paginacion" *ngIf="offset > 0 || hayMas">
+    <button class="outline" (click)="paginaAnterior()" *ngIf="offset > 0">
       ← Anterior
     </button>
     <span class="pagina-info">Página {{ (offset / limit) + 1 }}</span>
-    <button class="outline" (click)="paginaSiguiente()" [disabled]="!hayMas">
+    <button class="outline" (click)="paginaSiguiente()" *ngIf="hayMas">
       Siguiente →
     </button>
   </div>

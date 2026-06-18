@@ -1,18 +1,31 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post,UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Headers } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('auth')
 export class AuthController {
 
-    constructor(private readonly authService: AuthService) { }
+    constructor(private readonly authService: AuthService, private readonly cloudinaryService: CloudinaryService) { }
 
     @Post('register')
-    register(@Body() registerDto: RegisterDto) {
-        console.log(registerDto);
-        return this.authService.register(registerDto);
+    @UseInterceptors(FileInterceptor('imagenPerfil'))
+    async register(
+        @Body() registerDto: RegisterDto,
+        @UploadedFile() file?: Express.Multer.File
+    ) {
+        let imagenPerfilUrl = '';
+
+        if (file) {
+            imagenPerfilUrl = await this.cloudinaryService.subirImagen(file);
+        }
+
+        return this.authService.register({
+            ...registerDto,
+            imagenPerfil: imagenPerfilUrl
+        });
     }
 
     @Post('login')

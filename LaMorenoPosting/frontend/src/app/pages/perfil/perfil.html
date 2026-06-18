@@ -1,9 +1,10 @@
 <div class="perfil-wrapper">
 
   <div class="perfil-header" *ngIf="usuario">
-    <div class="avatar">
+    <div class="avatar" *ngIf="!usuario.imagenPerfil">
       {{ usuario.nombre?.charAt(0) }}{{ usuario.apellido?.charAt(0) }}
     </div>
+    <img *ngIf="usuario.imagenPerfil" [src]="usuario.imagenPerfil" class="avatar-img">
 
     <div class="perfil-info" *ngIf="!editando">
       <h1>{{ usuario.nombre }} {{ usuario.apellido }}</h1>
@@ -14,6 +15,9 @@
     </div>
 
     <div class="perfil-info" *ngIf="editando">
+      <p class="aviso-prueba" *ngIf="usuario.username === 'tobias' || usuario.username === 'accesorapido'">
+        ⚠️ Este es un usuario de prueba — no modifiques el usuario ni la contraseña
+      </p>
       <div class="edit-fila">
         <input [(ngModel)]="datosEdicion.nombre" placeholder="Nombre">
         <input [(ngModel)]="datosEdicion.apellido" placeholder="Apellido">
@@ -32,9 +36,7 @@
     <p *ngIf="ultimasPublicaciones.length === 0" class="vacio">
       Todavía no publicaste nada
     </p>
-    <app-publicacion
-      *ngFor="let pub of ultimasPublicaciones"
-      [publicacion]="pub">
+    <app-publicacion *ngFor="let pub of ultimasPublicaciones" [publicacion]="pub">
     </app-publicacion>
   </div>
 
