@@ -2,10 +2,11 @@
 
   <button class="btn-volver" routerLink="/publicaciones">← Volver</button>
 
+
   <div class="pub-card" *ngIf="publicacion">
-    <div class="pub-meta">
-      <span>@{{ publicacion.username }}</span>
-    </div>
+    <a [routerLink]="['/perfil', publicacion.username]" class="publicacion-autor">
+      @{{ publicacion.username }}
+    </a>
 
     <h1 class="pub-titulo">{{ publicacion.titulo }}</h1>
     <p class="pub-descripcion">{{ publicacion.descripcion }}</p>

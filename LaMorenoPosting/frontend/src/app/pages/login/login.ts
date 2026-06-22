@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ export class Login {
     { label: 'Usuario', identificador: 'accesorapido', password: 'A12345678' }
   ];
 
-  constructor(private http: HttpClient, private router: Router, public auth: AuthService) { }
+  constructor(private http: HttpClient, private router: Router, public auth: AuthService, private cdr: ChangeDetectorRef) { }
 
   login() {
     this.errorMsg = '';
@@ -51,10 +51,12 @@ export class Login {
         this.router.navigate(['/loading']);
       },
       error: (err) => {
+        
         this.errorMsg = err.status === 401
           ? 'Usuario o contraseña incorrectos'
           : 'Error al iniciar sesión';
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }

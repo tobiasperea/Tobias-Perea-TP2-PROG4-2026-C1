@@ -1,20 +1,23 @@
 <div class="perfil-wrapper">
 
-  <div class="perfil-header" *ngIf="usuario">
-    <div class="avatar" *ngIf="!usuario.imagenPerfil">
-      {{ usuario.nombre?.charAt(0) }}{{ usuario.apellido?.charAt(0) }}
+  <div class="perfil-header" *ngIf="usuarioVisto">
+    <img *ngIf="usuarioVisto.imagenPerfil" [src]="usuarioVisto.imagenPerfil" class="avatar-img">
+    <div class="avatar" *ngIf="!usuarioVisto.imagenPerfil">
+      {{ usuarioVisto.nombre?.charAt(0) }}{{ usuarioVisto.apellido?.charAt(0) }}
     </div>
-    <img *ngIf="usuario.imagenPerfil" [src]="usuario.imagenPerfil" class="avatar-img">
 
     <div class="perfil-info" *ngIf="!editando">
-      <h1>{{ usuario.nombre }} {{ usuario.apellido }}</h1>
-      <p class="username">@{{ usuario.username }}</p>
-      <p class="email">{{ usuario.email }}</p>
-      <p class="descripcion" *ngIf="usuario.descripcion">{{ usuario.descripcion }}</p>
-      <button class="btn-editar-perfil" (click)="editando = true">✏️ Editar perfil</button>
+      <h1>{{ usuarioVisto.nombre }} {{ usuarioVisto.apellido }}</h1>
+      <p class="username">@{{ usuarioVisto.username }}</p>
+      <p class="email">{{ usuarioVisto.email }}</p>
+      <p class="descripcion" *ngIf="usuarioVisto.descripcion">{{ usuarioVisto.descripcion }}</p>
+      <button class="btn-editar-perfil" *ngIf="esMiPerfil" (click)="editando = true">
+        ✏️ Editar perfil
+      </button>
     </div>
 
-    <div class="perfil-info" *ngIf="editando">
+
+    <div class="perfil-info" *ngIf="editando && esMiPerfil">
       <p class="aviso-prueba" *ngIf="usuario.username === 'tobias' || usuario.username === 'accesorapido'">
         ⚠️ Este es un usuario de prueba — no modifiques el usuario ni la contraseña
       </p>
@@ -22,6 +25,7 @@
         <input [(ngModel)]="datosEdicion.nombre" placeholder="Nombre">
         <input [(ngModel)]="datosEdicion.apellido" placeholder="Apellido">
       </div>
+      
       <input [(ngModel)]="datosEdicion.username" placeholder="Username">
       <textarea [(ngModel)]="datosEdicion.descripcion" placeholder="Descripción" rows="2"></textarea>
       <div class="edit-btns">

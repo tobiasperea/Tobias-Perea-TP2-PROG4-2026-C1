@@ -33,4 +33,7 @@ export class UsersService {
             { new: true }
         ).select('-password');
     }
+    async buscarPorUsername(username: string) {
+        return this.userModel.findOne({ username }).select('-password');
+    }
 }

@@ -40,4 +40,9 @@ export class UsersController {
         });
     }
 
+    @Get('username/:username')
+    buscarPorUsername(@Param('username') username: string) {
+        return this.usersService.buscarPorUsername(username);
+    }
+
 }
