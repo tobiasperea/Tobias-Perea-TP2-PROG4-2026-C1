@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/schemas/user.schema';
@@ -11,7 +11,7 @@ export class AdminService {
     constructor(
         @InjectModel(User.name)
         private userModel: Model<UserDocument>
-    ) {}
+    ) { }
 
     verificarAdmin(authorization: string) {
         const token = authorization?.replace('Bearer ', '') || '';
@@ -27,13 +27,37 @@ export class AdminService {
     }
 
     async crearUsuario(datos: any) {
-        const hashedPassword = await bcrypt.hash(datos.password, 10);
-        const nuevoUsuario = new this.userModel({
-            ...datos,
-            password: hashedPassword
-        });
-        return nuevoUsuario.save();
+
+        try {
+
+            const hashedPassword = await bcrypt.hash(datos.password, 10);
+
+            const nuevoUsuario = new this.userModel({
+                ...datos,
+                password: hashedPassword
+            });
+
+            return await nuevoUsuario.save();
+
+        } catch (error: any) {
+
+            if (error.code === 11000) {
+
+                if (error.keyPattern?.email) {
+                    throw new ConflictException('El email ya está registrado');
+                }
+
+                if (error.keyPattern?.username) {
+                    throw new ConflictException('El usuario ya existe');
+                }
+
+                throw new ConflictException('Ya existe un usuario con esos datos');
+            }
+
+            throw error;
+        }
     }
+
 
     async deshabilitarUsuario(id: string) {
         return this.userModel.findByIdAndUpdate(

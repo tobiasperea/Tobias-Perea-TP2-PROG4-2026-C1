@@ -18,6 +18,7 @@ export class DashboardUsuarios implements OnInit {
   usuarios: any[] = [];
   mostrarFormulario = false;
   cargando = false;
+  errorMsg = '';
 
   nuevoUsuario = {
     nombre: '',
@@ -53,7 +54,33 @@ export class DashboardUsuarios implements OnInit {
   }
 
   crearUsuario() {
+
+
+
+    this.errorMsg = '';
+
+    if (!this.nuevoUsuario.nombre ||
+      !this.nuevoUsuario.apellido ||
+      !this.nuevoUsuario.email ||
+      !this.nuevoUsuario.username ||
+      !this.nuevoUsuario.password ||
+      !this.nuevoUsuario.fechaNacimiento) {
+
+      this.errorMsg = 'Completá todos los campos obligatorios';
+      return;
+    }
+    if (this.nuevoUsuario.password.length < 8) {
+      this.errorMsg = 'La contraseña debe tener al menos 8 caracteres';
+      return;
+    }
+
+    if (!this.nuevoUsuario.email.includes('@')) {
+      this.errorMsg = 'Ingresá un correo válido';
+      return;
+    }
+
     this.cargando = true;
+
     this.adminService.crearUsuario(this.nuevoUsuario).subscribe({
       next: () => {
         this.mostrarFormulario = false;
@@ -64,7 +91,13 @@ export class DashboardUsuarios implements OnInit {
         this.cargarUsuarios();
         this.cargando = false;
       },
-      error: () => { this.cargando = false; }
+      error: (err) => {
+        this.errorMsg =
+        err.error?.message || 'No se pudo crear el usuario';
+
+        this.cargando = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 

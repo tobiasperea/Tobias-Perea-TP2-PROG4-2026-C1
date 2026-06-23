@@ -51,10 +51,16 @@ export class Login {
         this.router.navigate(['/loading']);
       },
       error: (err) => {
-        
-        this.errorMsg = err.status === 401
-          ? 'Usuario o contraseña incorrectos'
-          : 'Error al iniciar sesión';
+        if (err.status === 401) {
+          const msg = err.error?.message || '';
+          if (msg.includes('deshabilitad')) {
+            this.errorMsg = 'Tu cuenta está deshabilitada';
+          } else {
+            this.errorMsg = 'Usuario o contraseña incorrectos';
+          }
+        } else {
+          this.errorMsg = 'Error al iniciar sesión';
+        }
         this.cargando = false;
         this.cdr.detectChanges();
       }
