@@ -26,7 +26,9 @@ export class Publicacion {
 
   get usuarioActual() {
     const usuario = localStorage.getItem('usuario');
-    return usuario ? JSON.parse(usuario).id : '';
+    const id = usuario ? JSON.parse(usuario).id : '';
+    //console.log('usuarioActual:', id, 'publicacion.usuarioId:', this.publicacion?.usuarioId);
+    return id;
   }
 
   constructor(
@@ -77,6 +79,7 @@ export class Publicacion {
       .subscribe(() => {
         this.eliminada.emit();
       });
+      this.cdr.detectChanges();
   }
   verPublicacion() {
 

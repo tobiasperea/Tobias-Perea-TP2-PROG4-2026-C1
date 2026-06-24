@@ -25,7 +25,7 @@
         <input [(ngModel)]="datosEdicion.nombre" placeholder="Nombre">
         <input [(ngModel)]="datosEdicion.apellido" placeholder="Apellido">
       </div>
-      
+
       <input [(ngModel)]="datosEdicion.username" placeholder="Username">
       <textarea [(ngModel)]="datosEdicion.descripcion" placeholder="Descripción" rows="2"></textarea>
       <div class="edit-btns">
@@ -40,7 +40,7 @@
     <p *ngIf="ultimasPublicaciones.length === 0" class="vacio">
       Todavía no publicaste nada
     </p>
-    <app-publicacion *ngFor="let pub of ultimasPublicaciones" [publicacion]="pub">
+    <app-publicacion *ngFor="let pub of ultimasPublicaciones" [publicacion]="pub" (eliminada)="recargarPerfil()">
     </app-publicacion>
   </div>
 

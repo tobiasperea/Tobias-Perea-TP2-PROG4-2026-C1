@@ -44,6 +44,9 @@ export class Perfil implements OnInit {
   ngOnInit() {
     const usernameParam = this.route.snapshot.paramMap.get('username');
     const usuarioLogueado = this.auth.usuario();
+    console.log('USUARIO LOGUEADO', usuarioLogueado);
+    console.log('ID', usuarioLogueado?.id);
+    console.log('_ID', usuarioLogueado?._id);
 
     if (!usernameParam || usernameParam === usuarioLogueado?.username) {
       this.esMiPerfil = true;
@@ -90,23 +93,30 @@ export class Perfil implements OnInit {
     formData.append('apellido', this.datosEdicion.apellido);
     formData.append('username', this.datosEdicion.username);
     formData.append('descripcion', this.datosEdicion.descripcion);
-    if (this.imagenPerfil) {
-      formData.append('imagenPerfil', this.imagenPerfil);
-    }
 
     this.http.put<any>(
       `${environment.apiUrl}/users/perfil`,
       formData,
       { headers: this.headers() }
     ).subscribe((res: any) => {
-      this.auth.setUsuario(res, localStorage.getItem('token')!);
-      this.usuarioVisto = res;
-      this.usuario = res;
-      this.editando = false;
-      this.cdr.detectChanges();
+
+      this.http.post<any>(
+        `${environment.apiUrl}/auth/refrescar`,
+        {},
+        { headers: this.headers() }
+      ).subscribe((tokenRes: any) => {
+        this.auth.setUsuario(res, tokenRes.token);
+        this.usuarioVisto = res;
+        this.usuario = res;
+        this.cargarPublicaciones(res.id || res._id);
+        this.editando = false;
+        this.cdr.detectChanges();
+      });
     });
   }
-  onImagenSeleccionada(event: any) {
-    this.imagenPerfil = event.target.files[0];
+  recargarPerfil() {
+    this.cargarPublicaciones(
+      this.usuarioVisto.id || this.usuarioVisto._id
+    );
   }
 }

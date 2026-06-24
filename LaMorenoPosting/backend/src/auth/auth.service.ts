@@ -83,14 +83,29 @@ export class AuthService {
 
     async refrescar(token: string) {
         try {
-            const verificado = verify(token, process.env.JWT_SECRET!) as any;
+
+            const verificado = verify(
+                token,
+                process.env.JWT_SECRET!
+            ) as any;
+
+            const usuario = await this.userModel.findById(verificado.sub);
+
+            if (!usuario) {
+                throw new UnauthorizedException('Usuario no encontrado');
+            }
+
             const payload = {
-                sub: verificado.sub,
-                username: verificado.username,
-                perfil: verificado.perfil
+                sub: usuario._id,
+                username: usuario.username,
+                perfil: usuario.perfil,
+                imagenPerfil: usuario.imagenPerfil
             };
+
             const nuevoToken = this.jwtService.sign(payload);
+
             return { token: nuevoToken };
+
         } catch {
             throw new UnauthorizedException('Token inválido');
         }
