@@ -24,7 +24,7 @@ export class Perfil implements OnInit {
   esMiPerfil = false;
   usuarioVisto: any = null;
   imagenPerfil: File | null = null;
-
+  errorMsg = '';
   datosEdicion = {
     nombre: '',
     apellido: '',
@@ -88,6 +88,21 @@ export class Perfil implements OnInit {
   }
 
   guardarPerfil() {
+    this.errorMsg = '';
+
+    if (!this.datosEdicion.nombre.trim()) {
+      this.errorMsg = 'El nombre no puede estar vacío';
+      return;
+    }
+    if (!this.datosEdicion.apellido.trim()) {
+      this.errorMsg = 'El apellido no puede estar vacío';
+      return;
+    }
+    if (!this.datosEdicion.username.trim()) {
+      this.errorMsg = 'El username no puede estar vacío';
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nombre', this.datosEdicion.nombre);
     formData.append('apellido', this.datosEdicion.apellido);
@@ -98,20 +113,29 @@ export class Perfil implements OnInit {
       `${environment.apiUrl}/users/perfil`,
       formData,
       { headers: this.headers() }
-    ).subscribe((res: any) => {
-
-      this.http.post<any>(
-        `${environment.apiUrl}/auth/refrescar`,
-        {},
-        { headers: this.headers() }
-      ).subscribe((tokenRes: any) => {
-        this.auth.setUsuario(res, tokenRes.token);
-        this.usuarioVisto = res;
-        this.usuario = res;
-        this.cargarPublicaciones(res.id || res._id);
-        this.editando = false;
+    ).subscribe({
+      next: (res: any) => {
+        this.http.post<any>(
+          `${environment.apiUrl}/auth/refrescar`,
+          {},
+          { headers: this.headers() }
+        ).subscribe((tokenRes: any) => {
+          this.auth.setUsuario(res, tokenRes.token);
+          this.usuarioVisto = res;
+          this.usuario = res;
+          this.cargarPublicaciones(res.id || res._id);
+          this.editando = false;
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.errorMsg = err.error?.message || 'El username ya está en uso';
+        } else {
+          this.errorMsg = 'Error al guardar el perfil';
+        }
         this.cdr.detectChanges();
-      });
+      }
     });
   }
   recargarPerfil() {

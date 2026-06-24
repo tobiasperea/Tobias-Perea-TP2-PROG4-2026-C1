@@ -1,4 +1,5 @@
 <div class="perfil-wrapper">
+  
 
   <div class="perfil-header" *ngIf="usuarioVisto">
     <img *ngIf="usuarioVisto.imagenPerfil" [src]="usuarioVisto.imagenPerfil" class="avatar-img">
@@ -28,6 +29,8 @@
 
       <input [(ngModel)]="datosEdicion.username" placeholder="Username">
       <textarea [(ngModel)]="datosEdicion.descripcion" placeholder="Descripción" rows="2"></textarea>
+
+      <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
       <div class="edit-btns">
         <button (click)="guardarPerfil()">Guardar</button>
         <button class="outline" (click)="editando = false">Cancelar</button>
