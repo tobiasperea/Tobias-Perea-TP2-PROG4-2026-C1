@@ -26,7 +26,7 @@
     </button>
 
     <button class="btn-eliminar" *ngIf="publicacion.usuarioId === usuarioActual || esAdmin"
-      (click)="eliminar(); $event.stopPropagation()">
+      (click)="mostrarConfirmacion = true; $event.stopPropagation()">
 
       🗑️ Eliminar
 
@@ -41,6 +41,32 @@
     <a [routerLink]="['/publicacion', publicacion._id]" class="ver-mas">
       Ver todos los comentarios →
     </a>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="mostrarConfirmacion" (click)="mostrarConfirmacion = false">
+
+    <div class="modal-confirmacion" (click)="$event.stopPropagation()">
+
+      <h3>Eliminar publicación</h3>
+
+      <p>
+        ¿Seguro que querés eliminar esta publicación?
+      </p>
+
+      <div class="modal-btns">
+
+        <button class="btn-eliminar" (click)="eliminar()">
+          Eliminar
+        </button>
+
+        <button class="outline" (click)="mostrarConfirmacion = false">
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>

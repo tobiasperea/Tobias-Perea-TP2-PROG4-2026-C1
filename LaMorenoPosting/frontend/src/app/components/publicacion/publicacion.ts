@@ -23,6 +23,7 @@ export class Publicacion {
 
   @Output()
   eliminada = new EventEmitter<void>();
+  mostrarConfirmacion = false;
 
   get usuarioActual() {
     const usuario = localStorage.getItem('usuario');
@@ -77,9 +78,9 @@ export class Publicacion {
     this.publicacionesService
       .eliminar(this.publicacion._id)
       .subscribe(() => {
+        this.mostrarConfirmacion = false;
         this.eliminada.emit();
       });
-      this.cdr.detectChanges();
   }
   verPublicacion() {
 

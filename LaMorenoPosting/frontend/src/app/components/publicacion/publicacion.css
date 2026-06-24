@@ -147,3 +147,40 @@
   font-weight: 700;
   color: var(--azul);
 }
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.modal-confirmacion {
+  width: 320px;
+  padding: 24px;
+
+  border-radius: var(--border-radius);
+  background: var(--fondo-card);
+
+  text-align: center;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.modal-btns .outline {
+  flex: 2;
+}
+
+.modal-btns .btn-eliminar {
+  flex: 1;
+}
