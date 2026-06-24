@@ -41,6 +41,25 @@ export class Register {
       this.errorMsg = 'Completá todos los campos obligatorios';
       return;
     }
+    const fecha = new Date(this.fechaNacimiento);
+    const hoy = new Date();
+
+    let edad = hoy.getFullYear() - fecha.getFullYear();
+
+    const mesActual = hoy.getMonth();
+    const mesNacimiento = fecha.getMonth();
+
+    if (
+      mesActual < mesNacimiento ||
+      (mesActual === mesNacimiento && hoy.getDate() < fecha.getDate())
+    ) {
+      edad--;
+    }
+
+    if (edad < 15) {
+      this.errorMsg = 'Debés tener al menos 15 años';
+      return;
+    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(this.email)) {

@@ -10,13 +10,18 @@
     </div>
 
     <input [(ngModel)]="email" type="email" placeholder="Correo">
+    <small class="hint">usuario@gmail.com</small>
     <input [(ngModel)]="username" placeholder="Nombre de usuario">
     <input [(ngModel)]="password" type="password" placeholder="Contraseña">
+    <small class="hint">
+      Mínimo 8 caracteres, una mayúscula y un número
+    </small>
     <input [(ngModel)]="repetirPassword" type="password" placeholder="Repetir contraseña">
 
     <div class="campo">
       <label>Fecha de nacimiento</label>
       <input [(ngModel)]="fechaNacimiento" type="date">
+      <small class="hint">Debés tener al menos 15 años</small>
     </div>
 
     <textarea [(ngModel)]="descripcion" placeholder="Descripción breve (opcional)" rows="3"></textarea>
