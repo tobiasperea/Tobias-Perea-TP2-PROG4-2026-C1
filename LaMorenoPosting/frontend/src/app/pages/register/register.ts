@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,7 @@ export class Register {
   cargando = false;
   perfil = 'usuario';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,private cdr: ChangeDetectorRef) { }
 
   onImagenSeleccionada(event: any) {
     this.imagenPerfil = event.target.files[0];
@@ -105,10 +106,13 @@ export class Register {
           this.router.navigate(['/login']);
         },
         error: (err) => {
-          this.errorMsg = err.status === 400
-            ? 'El correo o usuario ya están registrados'
-            : 'Error al registrarse';
+          this.errorMsg =
+            err.status === 409
+              ? err.error.message
+              : 'Error al registrarse';
+
           this.cargando = false;
+          this.cdr.detectChanges();
         }
       });
   }
