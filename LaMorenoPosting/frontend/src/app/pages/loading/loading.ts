@@ -17,10 +17,10 @@ export class Loading implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('ENTRE A LOADING');
+    //console.log('ENTRE A LOADING');
 
     const token = localStorage.getItem('token');
-    console.log('TOKEN', token);
+    //console.log('TOKEN', token);
 
     if (!token) {
 

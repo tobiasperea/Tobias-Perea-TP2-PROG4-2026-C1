@@ -44,9 +44,9 @@ export class Perfil implements OnInit {
   ngOnInit() {
     const usernameParam = this.route.snapshot.paramMap.get('username');
     const usuarioLogueado = this.auth.usuario();
-    console.log('USUARIO LOGUEADO', usuarioLogueado);
-    console.log('ID', usuarioLogueado?.id);
-    console.log('_ID', usuarioLogueado?._id);
+    //console.log('USUARIO LOGUEADO', usuarioLogueado);
+    //console.log('ID', usuarioLogueado?.id);
+    //console.log('_ID', usuarioLogueado?._id);
 
     if (!usernameParam || usernameParam === usuarioLogueado?.username) {
       this.esMiPerfil = true;

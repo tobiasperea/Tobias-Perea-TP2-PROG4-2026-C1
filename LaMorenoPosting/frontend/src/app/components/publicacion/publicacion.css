@@ -52,7 +52,19 @@
 
 .publicacion-acciones {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.acciones-izquierda {
+  display: flex;
   gap: 8px;
+}
+
+.publicacion-likes-abajo {
+  font-size: 13px;
+  color: var(--azul-apagado);
 }
 
 .btn-like {
@@ -120,6 +132,7 @@
 .ver-mas:hover {
   color: var(--azul);
 }
+
 .autor-info {
   display: flex;
   align-items: center;

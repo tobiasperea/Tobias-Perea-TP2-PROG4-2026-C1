@@ -25,6 +25,7 @@ export class Publicacion {
   eliminada = new EventEmitter<void>();
   mostrarConfirmacion = false;
 
+
   get usuarioActual() {
     const usuario = localStorage.getItem('usuario');
     const id = usuario ? JSON.parse(usuario).id : '';
@@ -72,6 +73,18 @@ export class Publicacion {
 
       });
 
+  }
+  mostrarModalEliminar() {
+    this.mostrarConfirmacion = true;
+  }
+
+  confirmarEliminar() {
+    this.publicacionesService
+      .eliminar(this.publicacion._id)
+      .subscribe(() => {
+        this.mostrarConfirmacion = false;
+        this.eliminada.emit();
+      });
   }
 
   eliminar() {

@@ -6,67 +6,51 @@
       <div class="autor-initials" *ngIf="!publicacion.imagenPerfil">
         {{ publicacion.username?.charAt(0)?.toUpperCase() }}
       </div>
-      <span class="publicacion-autor">@{{ publicacion.username }}</span>
+      <a [routerLink]="['/perfil', publicacion.username]" class="publicacion-autor" (click)="$event.stopPropagation()">
+        @{{ publicacion.username }}
+      </a>
     </div>
-    <span class="publicacion-likes">❤️ {{ publicacion.likes.length }}</span>
     <span class="publicacion-fecha">{{ publicacion.createdAt | fechaRelativa }}</span>
   </div>
+
   <h3 class="publicacion-titulo">{{ publicacion.titulo | capitalize }}</h3>
   <p class="publicacion-descripcion">{{ publicacion.descripcion | truncar:150 }}</p>
 
   <img *ngIf="publicacion.imagenUrl" [src]="publicacion.imagenUrl" class="publicacion-imagen" alt="imagen">
 
   <div class="publicacion-acciones">
-
-    <button class="btn-like" [class.activo]="tieneLike()"
-      (click)="tieneLike() ? quitarLike() : darLike(); $event.stopPropagation()">
-
-      {{ tieneLike() ? '💔 Quitar like' : '❤️ Like' }}
-
-    </button>
-
-    <button class="btn-eliminar" *ngIf="publicacion.usuarioId === usuarioActual || esAdmin"
-      (click)="mostrarConfirmacion = true; $event.stopPropagation()">
-
-      🗑️ Eliminar
-
-    </button>
-
+    <div class="acciones-izquierda">
+      <button class="btn-like" [class.activo]="tieneLike()"
+        (click)="tieneLike() ? quitarLike() : darLike(); $event.stopPropagation()">
+        {{ tieneLike() ? '💔 Quitar like' : '❤️ Like' }}
+      </button>
+      <button class="btn-eliminar" *ngIf="publicacion.usuarioId === usuarioActual || esAdmin"
+        (click)="mostrarModalEliminar(); $event.stopPropagation()">
+        🗑️ Eliminar
+      </button>
+    </div>
+    <span class="publicacion-likes-abajo">❤️ {{ publicacion.likes.length }}</span>
   </div>
+
   <div class="comentarios-preview" *ngIf="publicacion.comentariosPreview?.length > 0">
     <div class="comentario-preview" *ngFor="let c of publicacion.comentariosPreview">
       <span class="comentario-username">@{{ c.username }}</span>
       <span class="comentario-texto">{{ c.contenido | truncar:80 }}</span>
     </div>
-    <a [routerLink]="['/publicacion', publicacion._id]" class="ver-mas">
+    <a [routerLink]="['/publicacion', publicacion._id]" class="ver-mas" (click)="$event.stopPropagation()">
       Ver todos los comentarios →
     </a>
   </div>
 
-  <div class="modal-backdrop" *ngIf="mostrarConfirmacion" (click)="mostrarConfirmacion = false">
+</div>
 
-    <div class="modal-confirmacion" (click)="$event.stopPropagation()">
-
-      <h3>Eliminar publicación</h3>
-
-      <p>
-        ¿Seguro que querés eliminar esta publicación?
-      </p>
-
-      <div class="modal-btns">
-
-        <button class="btn-eliminar" (click)="eliminar()">
-          Eliminar
-        </button>
-
-        <button class="outline" (click)="mostrarConfirmacion = false">
-          Cancelar
-        </button>
-
-      </div>
-
+<div class="modal-backdrop" *ngIf="mostrarConfirmacion" (click)="mostrarConfirmacion = false">
+  <div class="modal-confirmacion" (click)="$event.stopPropagation()">
+    <h3>Eliminar publicación</h3>
+    <p>¿Seguro que querés eliminar esta publicación?</p>
+    <div class="modal-btns">
+      <button class="btn-eliminar" (click)="confirmarEliminar()">Eliminar</button>
+      <button class="outline" (click)="mostrarConfirmacion = false">Cancelar</button>
     </div>
-
   </div>
-
 </div>

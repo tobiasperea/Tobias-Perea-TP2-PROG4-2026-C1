@@ -70,7 +70,7 @@ export class Publicacion implements OnInit {
       )
       .subscribe((res: any) => {
 
-        console.log('COMENTARIO OK', res);
+        //console.log('COMENTARIO OK', res);
 
         this.comentarios.unshift(res);
 
