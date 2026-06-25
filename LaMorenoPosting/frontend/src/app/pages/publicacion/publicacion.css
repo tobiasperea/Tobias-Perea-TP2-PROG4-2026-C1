@@ -152,3 +152,31 @@
   margin-bottom: 6px;
   font-weight: 600;
 }
+.pub-autor-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pub-autor-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--azul);
+}
+
+.pub-autor-initials {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--azul-oscuro);
+  border: 1px solid var(--azul);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--azul);
+}

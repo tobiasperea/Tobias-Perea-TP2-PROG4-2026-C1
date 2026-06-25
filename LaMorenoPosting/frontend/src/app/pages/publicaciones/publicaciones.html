@@ -20,9 +20,9 @@
     <input [(ngModel)]="nuevoTitulo" placeholder="Título">
     <textarea [(ngModel)]="nuevaDescripcion" placeholder="¿Qué está pasando en La Moreno?" rows="3"
       appAutoFocus></textarea>
-    <input [(ngModel)]="nuevaImagenUrl" placeholder="URL de imagen (opcional)">
+    
     <div class="campo">
-      <label>O subí una imagen</label>
+      
       <input type="file" accept="image/*" (change)="onImagenSeleccionada($event)">
     </div>
     <div class="form-btns">

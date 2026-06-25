@@ -91,7 +91,7 @@ export class DashboardEstadisticas implements OnInit, AfterViewInit {
       const chart = new Chart(this.graficoComentariosDia.nativeElement, {
         type: 'line',
         data: {
-          labels: data.map(d => d._id),
+          labels: data.map(d => d.username || d._id),
           datasets: [{
             label: 'Comentarios por día',
             data: data.map(d => d.total),
@@ -119,7 +119,7 @@ export class DashboardEstadisticas implements OnInit, AfterViewInit {
       const chart = new Chart(this.graficoComentariosPub.nativeElement, {
         type: 'doughnut',
         data: {
-          labels: data.map(d => d._id),
+          labels: data.map(d => d.username || d._id),
           datasets: [{
             label: 'Comentarios por publicación',
             data: data.map(d => d.total),

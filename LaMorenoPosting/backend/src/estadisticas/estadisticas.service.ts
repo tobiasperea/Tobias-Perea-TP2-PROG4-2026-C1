@@ -23,7 +23,7 @@ export class EstadisticasService {
         }
         return this.publicacionModel.aggregate([
             { $match: filtro },
-            { $group: { _id: '$usuarioId', total: { $sum: 1 } } },
+            { $group: { _id: '$usuarioId', total: { $sum: 1 }, username: { $first: '$username' } } },
             { $sort: { total: -1 } }
         ]);
     }
